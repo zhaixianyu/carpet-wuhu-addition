@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "remote-inventory-01",
+  "version": "${version}",
+  "name": "remote-inventory-01",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "website": "https://space.bilibili.com/31545812",
+    "repo": "https://github.com/zhaixianyu"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/remote-inventory-01/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+    ],
+    "main": [
+      "com.zxy.remoteinventory01.Remote_inventory_01"
+    ]
+  },
+  "mixins": [
+    "remote-inventory-01.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "fabric": "*",
+    "minecraft": "*"
+  }
+}
