@@ -4,8 +4,6 @@
   "package": "com.zxy.remoteinventory01.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinAbstractFurnaceBlockEntity",
-    "MixinBrewingStandBlockEntity",
     "MixinLootableContainerBlockEntity",
     "MixinServerPlayerEntity",
     "MixinServerWorld"

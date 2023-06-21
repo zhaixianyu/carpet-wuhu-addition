@@ -17,8 +17,6 @@ import static com.zxy.remoteinventory01.OpenInventoryPacket.playerlist;
 @Mixin(ServerPlayerEntity.class)
 public abstract class MixinServerPlayerEntity extends PlayerEntity{
 
-    @Shadow public abstract void playerTick();
-
     public MixinServerPlayerEntity(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
     }
