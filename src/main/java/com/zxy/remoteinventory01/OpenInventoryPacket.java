@@ -1,7 +1,6 @@
 package com.zxy.remoteinventory01;
 
 import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -78,11 +77,5 @@ public class OpenInventoryPacket{
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeBoolean(false);
         ServerPlayNetworking.send(player,OPEN_RETURN,new PacketByteBuf(buf));
-    }
-    public static void sendOpenInventory(BlockPos pos, RegistryKey<World> key){
-        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-        buf.writeBlockPos(pos);
-        buf.writeIdentifier(key.getValue());
-        ClientPlayNetworking.send(OPEN_INVENTORY, new PacketByteBuf(buf));
     }
 }

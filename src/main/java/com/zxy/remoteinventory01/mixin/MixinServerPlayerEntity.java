@@ -20,12 +20,8 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity{
     public MixinServerPlayerEntity(World world, BlockPos pos, float yaw, GameProfile profile) {
         super(world, pos, yaw, profile);
     }
-    /**
-     * @author 1
-     * @reason 2
-     */
-    @Inject(at = @At("HEAD"),method = "closeScreenHandler")
-    public void closeScreenHandler(CallbackInfo ci) {
+    @Inject(at = @At("HEAD"),method = "closeHandledScreen")
+    public void closeHandledScreen(CallbackInfo ci) {
         playerlist.removeIf(player -> player.getEntityName().equals(getEntityName()));
     }
 }
