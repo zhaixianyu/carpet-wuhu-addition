@@ -1,5 +1,5 @@
-[20:44:49] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.14.21
-[20:44:49] [main/INFO] (FabricLoader) Loading 37 mods:
+[09:53:14] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.14.21
+[09:53:15] [main/INFO] (FabricLoader) Loading 37 mods:
 	- fabric-api 0.84.0+1.20.1
 	- fabric-api-base 0.4.29+b04edc7a77
 	- fabric-api-lookup-api-v1 1.6.34+4d8536c977
@@ -37,31 +37,36 @@
 	- java 18
 	- minecraft 1.20.1
 	- remote-inventory-01 1.0
-[20:44:50] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/11419/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.12.5+mixin.0.8.5/8d31fb97c3e0cd7c8dad3441851c523bcfae6d8e/sponge-mixin-0.12.5+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
-[20:44:50] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[20:44:50] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
-[20:44:50] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[20:44:56] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[20:44:58] [main/INFO] (Minecraft) Loaded 7 recipes
-[20:44:58] [main/INFO] (Minecraft) Loaded 1271 advancements
-[20:44:59] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 1.179 ms
-[20:44:59] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.20.1
-[20:44:59] [Server thread/INFO] (Minecraft) Loading properties
-[20:44:59] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[20:44:59] [Server thread/INFO] (Minecraft) Generating keypair
-[20:44:59] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
-[20:44:59] [Server thread/INFO] (Minecraft) Using default channel type
-[20:44:59] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
-[20:44:59] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
-[20:44:59] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
-[20:44:59] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
-[20:44:59] [Server thread/INFO] (Minecraft) Preparing level "world"
-[20:45:00] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[20:45:03] [Worker-Main-6/INFO] (Minecraft) Preparing spawn area: 0%
-[20:45:03] [Worker-Main-5/INFO] (Minecraft) Preparing spawn area: 0%
-[20:45:03] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%
-[20:45:03] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%
-[20:45:03] [Worker-Main-7/INFO] (Minecraft) Preparing spawn area: 0%
-[20:45:03] [Worker-Main-4/INFO] (Minecraft) Preparing spawn area: 23%
-[20:45:03] [Server thread/INFO] (Minecraft) Time elapsed: 2781 ms
-[20:45:03] [Server thread/INFO] (Minecraft) Done (4.272s)! For help, type "help"
+[09:53:15] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/11419/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.12.5+mixin.0.8.5/8d31fb97c3e0cd7c8dad3441851c523bcfae6d8e/sponge-mixin-0.12.5+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
+[09:53:15] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[09:53:15] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
+[09:53:15] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[09:53:25] [main/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[09:53:28] [main/INFO] (Minecraft) Loaded 7 recipes
+[09:53:28] [main/INFO] (Minecraft) Loaded 1271 advancements
+[09:53:28] [main/INFO] (BiomeModificationImpl) Applied 0 biome modifications to 0 of 64 new biomes in 2.271 ms
+[09:53:28] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.20.1
+[09:53:28] [Server thread/INFO] (Minecraft) Loading properties
+[09:53:28] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
+[09:53:28] [Server thread/INFO] (Minecraft) Generating keypair
+[09:53:29] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
+[09:53:29] [Server thread/INFO] (Minecraft) Using default channel type
+[09:53:29] [Server thread/WARN] (Minecraft) **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[09:53:29] [Server thread/WARN] (Minecraft) The server will make no attempt to authenticate usernames. Beware.
+[09:53:29] [Server thread/WARN] (Minecraft) While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[09:53:29] [Server thread/WARN] (Minecraft) To change this, set "online-mode" to "true" in the server.properties file.
+[09:53:29] [Server thread/INFO] (Minecraft) Preparing level "world"
+[09:53:30] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[09:53:33] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%
+[09:53:33] [Worker-Main-6/INFO] (Minecraft) Preparing spawn area: 0%
+[09:53:33] [Worker-Main-5/INFO] (Minecraft) Preparing spawn area: 0%
+[09:53:33] [Worker-Main-1/INFO] (Minecraft) Preparing spawn area: 0%
+[09:53:33] [Worker-Main-7/INFO] (Minecraft) Preparing spawn area: 0%
+[09:53:33] [Worker-Main-3/INFO] (Minecraft) Preparing spawn area: 0%
+[09:53:33] [Worker-Main-7/INFO] (Minecraft) Preparing spawn area: 2%
+[09:53:34] [Server thread/INFO] (Minecraft) Time elapsed: 3502 ms
+[09:53:34] [Server thread/INFO] (Minecraft) Done (5.039s)! For help, type "help"
+[09:53:37] [Server thread/INFO] (Minecraft) Player657[/127.0.0.1:2309] logged in with entity id 85 at (46.5, 65.0, -6.5)
+[09:53:37] [Server thread/INFO] (Minecraft) Player657 joined the game
+[09:54:05] [Server thread/INFO] (Minecraft) Player657 lost connection: Disconnected
+[09:54:05] [Server thread/INFO] (Minecraft) Player657 left the game
