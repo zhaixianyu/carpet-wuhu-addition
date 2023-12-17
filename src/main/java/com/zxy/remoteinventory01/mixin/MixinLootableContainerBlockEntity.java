@@ -19,10 +19,11 @@ public class MixinLootableContainerBlockEntity extends BlockEntity {
     public MixinLootableContainerBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
     }
-    @Inject(at = @At("HEAD"),method = "canPlayerUse" , cancellable = true)
+
+    @Inject(at = @At("HEAD"), method = "canPlayerUse", cancellable = true)
     public void canPlayerUse(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         for (ServerPlayerEntity player1 : OpenInventoryPacket.playerlist) {
-            if(player.equals(player1)) cir.setReturnValue(true);
+            if (player.equals(player1)) cir.setReturnValue(true);
         }
     }
 

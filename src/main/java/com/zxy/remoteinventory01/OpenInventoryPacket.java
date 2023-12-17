@@ -33,7 +33,7 @@ public class OpenInventoryPacket{
     private static final Identifier OPEN_INVENTORY = new Identifier("remoteinventory", "open_inventory");
     private static final Identifier OPEN_RETURN = new Identifier("openreturn", "open_return");
     public static ArrayList<ServerPlayerEntity> playerlist = new ArrayList<>();
-    public static HashMap<ServerPlayerEntity,TickList> tickmap = new HashMap<>();
+    public static HashMap<ServerPlayerEntity,TickList> tickMap = new HashMap<>();
     public static void registerReceivePacket(){
 
         ServerPlayNetworking.registerGlobalReceiver(OPEN_INVENTORY, (server, player, serverPlayNetworkHandler, packetByteBuf, packetSender) -> {
@@ -50,7 +50,7 @@ public class OpenInventoryPacket{
             world.getChunkManager().addTicket(OPEN_TICKET,new ChunkPos(pos),2,new ChunkPos(pos));
         }
         playerlist.add(player);
-        tickmap.put(player,new TickList(blockState.getBlock(),world,pos,blockState));
+        tickMap.put(player,new TickList(blockState.getBlock(),world,pos,blockState));
 
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof ShulkerBoxBlockEntity entity &&

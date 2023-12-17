@@ -13,21 +13,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
 import static com.zxy.remoteinventory01.OpenInventoryPacket.playerlist;
-import static com.zxy.remoteinventory01.OpenInventoryPacket.tickmap;
+import static com.zxy.remoteinventory01.OpenInventoryPacket.tickMap;
 
 @Mixin(ServerWorld.class)
 public class MixinServerWorld {
     @Inject(at = @At("HEAD"),method = "tick")
     public void tick(CallbackInfo ci){
         for (ServerPlayerEntity s : playerlist) {
-            TickList list = tickmap.get(s);
+            TickList list = tickMap.get(s);
             if (!list.world.isChunkLoaded(ChunkPos.toLong(list.pos))) {
-                list.world.scheduleBlockTick(list.pos, list.block, 1);
-                BlockState state = list.state;
-                BlockState state2 = list.world.getBlockState(list.pos);
-                if (!state.equals(state2)) {
-                    OpenInventoryPacket.openFail(s);
-                }
+                list.world.shouldTick(list.pos);
+            }
+            BlockState state =  list.state;
+            BlockState state2 = list.world.getBlockState(list.pos);
+            if(!state.equals(state2)){
+                OpenInventoryPacket.openFail(s);
             }
         }
 //        for (ServerPlayerEntity s : playerlist) {
