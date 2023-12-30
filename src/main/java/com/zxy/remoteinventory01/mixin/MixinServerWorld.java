@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-
 import static com.zxy.remoteinventory01.OpenInventoryPacket.playerlist;
 import static com.zxy.remoteinventory01.OpenInventoryPacket.tickMap;
 
@@ -27,7 +26,7 @@ public class MixinServerWorld {
             BlockState state =  list.state;
             BlockState state2 = list.world.getBlockState(list.pos);
             if(!state.equals(state2)){
-                OpenInventoryPacket.openFail(s);
+                OpenInventoryPacket.openReturn(s,state2,false);
             }
         }
 //        for (ServerPlayerEntity s : playerlist) {
