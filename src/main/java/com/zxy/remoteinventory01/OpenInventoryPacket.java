@@ -2,11 +2,13 @@ package com.zxy.remoteinventory01;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -79,9 +81,9 @@ public class OpenInventoryPacket{
 
 
     public static void openReturn(ServerPlayerEntity player, BlockState state, boolean open){
-        InventoryPacket buf = new InventoryPacket(Unpooled.buffer());
-        buf.writeBlockState(state);
-        buf.writeBoolean(open);
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        MyPacket.encode(new MyPacket(state,open),buf);
+        buf.writeVarInt(Block.getRawIdFromState(state));
         ServerPlayNetworking.send(player,OPEN_RETURN,buf);
     }
 }
