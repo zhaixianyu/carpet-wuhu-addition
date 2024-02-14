@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "remote-inventory-01",
+  "id": "remote-interactions",
   "version": "${version}",
-  "name": "remote-inventory-01",
+  "name": "remote-interactions",
   "description": "",
   "authors": [],
   "contact": {
@@ -10,17 +10,17 @@
     "repo": "https://github.com/zhaixianyu"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/remote-inventory-01/icon.png",
+  "icon": "assets/remote-interactions/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
     ],
     "main": [
-      "com.zxy.remoteinventory01.Remote_inventory_01"
+      "com.zxy.remote_interactions.RemoteInteractions"
     ]
   },
   "mixins": [
-    "remote-inventory-01.mixins.json"
+    "remote-interactions.mixins.json"
   ],
   "depends": {
     "fabricloader": "*",

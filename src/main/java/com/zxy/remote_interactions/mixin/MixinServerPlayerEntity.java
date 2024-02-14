@@ -1,4 +1,4 @@
-package com.zxy.remoteinventory01.mixin;
+package com.zxy.remote_interactions.mixin;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.zxy.remoteinventory01.OpenInventoryPacket.playerlist;
+import static com.zxy.remote_interactions.OpenInventoryPacket.playerlist;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class MixinServerPlayerEntity extends PlayerEntity{

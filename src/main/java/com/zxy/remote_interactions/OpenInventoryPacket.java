@@ -1,4 +1,4 @@
-package com.zxy.remoteinventory01;
+package com.zxy.remote_interactions;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;

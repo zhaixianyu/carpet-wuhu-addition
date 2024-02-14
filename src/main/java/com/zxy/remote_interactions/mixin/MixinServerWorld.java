@@ -1,7 +1,7 @@
-package com.zxy.remoteinventory01.mixin;
+package com.zxy.remote_interactions.mixin;
 
-import com.zxy.remoteinventory01.OpenInventoryPacket;
-import com.zxy.remoteinventory01.TickList;
+import com.zxy.remote_interactions.OpenInventoryPacket;
+import com.zxy.remote_interactions.TickList;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static com.zxy.remoteinventory01.OpenInventoryPacket.playerlist;
-import static com.zxy.remoteinventory01.OpenInventoryPacket.tickMap;
+import static com.zxy.remote_interactions.OpenInventoryPacket.playerlist;
+import static com.zxy.remote_interactions.OpenInventoryPacket.tickMap;
 
 @Mixin(ServerWorld.class)
 public class MixinServerWorld {

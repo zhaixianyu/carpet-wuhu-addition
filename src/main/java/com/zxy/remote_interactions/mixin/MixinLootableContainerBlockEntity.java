@@ -1,6 +1,6 @@
-package com.zxy.remoteinventory01.mixin;
+package com.zxy.remote_interactions.mixin;
 
-import com.zxy.remoteinventory01.OpenInventoryPacket;
+import com.zxy.remote_interactions.OpenInventoryPacket;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.*;
 import net.minecraft.entity.player.PlayerEntity;

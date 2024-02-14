@@ -1,4 +1,4 @@
-package com.zxy.remoteinventory01;
+package com.zxy.remote_interactions;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
