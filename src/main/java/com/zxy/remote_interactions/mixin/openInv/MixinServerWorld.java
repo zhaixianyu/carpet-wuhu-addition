@@ -1,4 +1,4 @@
-package com.zxy.remote_interactions.mixin;
+package com.zxy.remote_interactions.mixin.openInv;
 
 import com.zxy.remote_interactions.OpenInventoryPacket;
 import com.zxy.remote_interactions.TickList;

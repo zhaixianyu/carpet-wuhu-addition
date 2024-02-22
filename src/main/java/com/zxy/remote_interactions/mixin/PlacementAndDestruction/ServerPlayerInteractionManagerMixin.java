@@ -1,4 +1,4 @@
-package com.zxy.remote_interactions.mixin;
+package com.zxy.remote_interactions.mixin.PlacementAndDestruction;
 
 import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.util.math.Vec3d;

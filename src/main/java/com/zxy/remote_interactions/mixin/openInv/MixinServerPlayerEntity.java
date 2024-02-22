@@ -1,4 +1,4 @@
-package com.zxy.remote_interactions.mixin;
+package com.zxy.remote_interactions.mixin.openInv;
 
 import com.mojang.authlib.GameProfile;
 import net.minecraft.entity.player.PlayerEntity;

@@ -4,11 +4,11 @@
   "package": "com.zxy.remote_interactions.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinLootableContainerBlockEntity",
-    "MixinServerPlayerEntity",
-    "MixinServerWorld",
-    "ServerPlayerInteractionManagerMixin",
-    "ServerPlayNetworkHandlerMixin"
+    "openInv.MixinLootableContainerBlockEntity",
+    "openInv.MixinServerPlayerEntity",
+    "openInv.MixinServerWorld",
+    "PlacementAndDestruction.ServerPlayerInteractionManagerMixin",
+    "PlacementAndDestruction.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
   ],
