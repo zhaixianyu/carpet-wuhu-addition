@@ -34,6 +34,7 @@ import static net.minecraft.block.ShulkerBoxBlock.FACING;
 public class OpenInventoryPacket{
     private static final ChunkTicketType<ChunkPos> OPEN_TICKET =
             ChunkTicketType.create("ender_pearl", Comparator.comparingLong(ChunkPos::toLong), 2);
+    private static final Identifier HELLO_REMOTE_INTERACTIONS = new Identifier("hello", "hello_remote_interactions");
     public static HashMap<ServerPlayerEntity,TickList> tickMap = new HashMap<>();
     private static final Identifier OPEN_INVENTORY = new Identifier("remoteinventory", "open_inventory");
     private static final Identifier OPEN_RETURN = new Identifier("openreturn", "open_return");
@@ -73,6 +74,7 @@ public class OpenInventoryPacket{
         if ((r != null && !r.equals(ActionResult.CONSUME)) || handler == null) {
             System.out.println("openFail" + pos);
             openReturn(player,blockState,false);
+            return;
         }
         openReturn(player,blockState,true);
 //        System.out.println("player " + player.getName());
@@ -81,5 +83,8 @@ public class OpenInventoryPacket{
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         MyPacket.encode(new MyPacket(state,open),buf);
         ServerPlayNetworking.send(player,OPEN_RETURN,buf);
+    }
+    public static void helloRemote(ServerPlayerEntity player) {
+        ServerPlayNetworking.send(player, HELLO_REMOTE_INTERACTIONS, new PacketByteBuf(Unpooled.buffer()));
     }
 }
