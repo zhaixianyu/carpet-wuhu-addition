@@ -9,6 +9,7 @@
     "openInv.MixinLootableContainerBlockEntity",
     "openInv.MixinServerPlayerEntity",
     "openInv.MixinServerWorld",
+    "openInv.PlayerManagerMixin",
     "PlacementAndDestruction.ServerPlayerInteractionManagerMixin",
     "PlacementAndDestruction.ServerPlayNetworkHandlerMixin"
   ],
