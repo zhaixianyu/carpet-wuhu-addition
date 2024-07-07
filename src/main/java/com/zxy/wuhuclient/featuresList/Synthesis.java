@@ -2,6 +2,7 @@ package com.zxy.wuhuclient.featuresList;
 
 
 import com.zxy.wuhuclient.config.Configs;
+import com.zxy.wuhuclient.mixin.CraftingScreenHandlerMixin;
 import fi.dy.masa.itemscroller.recipes.RecipePattern;
 import fi.dy.masa.itemscroller.recipes.RecipeStorage;
 import fi.dy.masa.malilib.util.InventoryUtils;
@@ -13,13 +14,20 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.mob.ShulkerEntity;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.recipe.CraftingRecipe;
+
+
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.CraftingScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
+
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.text.Text;
@@ -29,7 +37,18 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
-import org.joml.Matrix4f;
+import net.minecraft.world.GameRules;
+
+//#if MC < 12001
+//$$ import net.minecraft.inventory.CraftingInventory;
+//$$ import net.minecraft.inventory.Inventory;
+//$$ import net.minecraft.screen.slot.CraftingResultSlot;
+//#elseif MC == 12001
+//$$ import net.minecraft.inventory.RecipeInputInventory;
+//#else
+import net.minecraft.inventory.RecipeInputInventory;
+import net.minecraft.recipe.RecipeEntry;
+//#endif
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -332,6 +351,49 @@ public class Synthesis {
         }
     }
 
+    public static boolean satisfyCraft(){
+        ClientPlayerEntity player = client.player;
+        ClientWorld world = client.world;
+        ScreenHandler sc = player.currentScreenHandler;
+
+        if(sc instanceof CraftingScreenHandler sc1
+        ){
+            ItemStack stack = ItemStack.EMPTY;
+            //#if MC <= 12001
+                //#if MC == 12001
+                //$$ RecipeInputInventory rec = ((CraftingScreenHandlerMixin)sc1).getInput();
+                //#else
+                //$$ CraftingInventory rec = ((CraftingScreenHandlerMixin)sc1).getInput();
+                //#endif
+            //$$ Optional<CraftingRecipe> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, rec, world);
+            //$$ CraftingRecipe recipe = optional.isPresent() ? optional.get() : null;
+            //$$ CraftingRecipe recipeEntry = optional.isPresent() ? optional.get() : null;
+            //#else
+            RecipeInputInventory rec = ((CraftingScreenHandlerMixin)sc1).getInput();
+            Optional<RecipeEntry<CraftingRecipe>> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, rec, world);
+            CraftingRecipe recipe = optional.map(RecipeEntry::value).orElse(null);
+            RecipeEntry<?> recipeEntry = optional.orElse(null);
+            //#endif
+
+            if (recipe != null)
+            {
+                if ((recipe.isIgnoredInRecipeBook() ||
+                        world.getGameRules().getBoolean(GameRules.DO_LIMITED_CRAFTING) == false ||
+                        ((ClientPlayerEntity) player).getRecipeBook().contains(recipeEntry)))
+                {
+                    //#if MC > 11802
+                    stack = recipe.craft(rec, MinecraftClient.getInstance().getNetworkHandler().getRegistryManager());
+                    //#else
+                    //$$ stack = recipe.craft(rec);
+                    //#endif
+                }
+                return !stack.isEmpty() && stack.getItem().equals(Synthesis.recipe.getResult().getItem());
+
+            }
+        }
+        return false;
+    }
+
     public static void synthesis2(){
         client.inGameHud.setOverlayMessage(Text.of("合成中..."), false);
         if(!pos.isWithinDistance(client.player.getPos(),5)){
@@ -410,10 +472,10 @@ public class Synthesis {
                 client.interactionManager.clickSlot(sc.syncId, i, 0, SlotActionType.PICKUP, player);
             }
 
-
             if(skip == recipeItems.length) break;
         }
-        for (int i2 = 0; InventoryUtils.areStacksEqual(sc.slots.get(0).getStack(), recipe.getResult()) && i2 < 64; i2++) {
+//        for (int i2 = 0; InventoryUtils.areStacksEqual(sc.slots.get(0).getStack(), recipe.getResult()) && i2 < 64; i2++) {
+        for (int i2 = 1; satisfyCraft() && i2 < 64; i2++) {
             client.interactionManager.clickSlot(sc.syncId, 0, 1, SlotActionType.THROW, player);
         }
         client.interactionManager.clickSlot(sc.syncId, -999, 2, SlotActionType.QUICK_CRAFT, client.player);
