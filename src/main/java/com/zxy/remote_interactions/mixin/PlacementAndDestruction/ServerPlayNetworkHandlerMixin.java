@@ -1,9 +1,13 @@
 package com.zxy.remote_interactions.mixin.PlacementAndDestruction;
 
+import com.zxy.remote_interactions.OpenInventoryPacket;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
@@ -11,7 +15,9 @@ import static com.zxy.remote_interactions.config.ServerConfig.configData;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class ServerPlayNetworkHandlerMixin {
-//    @Inject(at = @At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;isItemEnabled(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z"),method = "onPlayerInteractBlock")
+    @Shadow public ServerPlayerEntity player;
+
+    //    @Inject(at = @At(value = "INVOKE",target = "Lnet/minecraft/item/ItemStack;isItemEnabled(Lnet/minecraft/resource/featuretoggle/FeatureSet;)Z"),method = "onPlayerInteractBlock")
 //    public void test1(PlayerInteractBlockC2SPacket packet, CallbackInfo ci){
 //        System.out.println("111");
 //    }
@@ -36,5 +42,12 @@ public class ServerPlayNetworkHandlerMixin {
         double v = d * d + e * e + f * f;
         if(configData.putRange == -1 || v < configData.putRange) return -1;
         return v;
+    }
+    @Redirect(at= @At(value = "INVOKE",target = "Lnet/minecraft/screen/ScreenHandler;canUse(Lnet/minecraft/entity/player/PlayerEntity;)Z"),method = "onClickSlot")
+    private boolean test(ScreenHandler instance, PlayerEntity player){
+        for (ServerPlayerEntity player1 : OpenInventoryPacket.playerlist) {
+            if (player.equals(player1)) return true;
+        }
+        return this.player.currentScreenHandler.canUse(this.player);
     }
 }

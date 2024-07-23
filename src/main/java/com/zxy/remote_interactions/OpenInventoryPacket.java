@@ -16,7 +16,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -41,6 +40,7 @@ public class OpenInventoryPacket{
     public static ArrayList<ServerPlayerEntity> playerlist = new ArrayList<>();
     public static void registerReceivePacket(){
         ServerPlayNetworking.registerGlobalReceiver(OPEN_INVENTORY, (server, player, serverPlayNetworkHandler, packetByteBuf, packetSender) -> {
+
             BlockPos pos = packetByteBuf.readBlockPos();
             RegistryKey<World> key = RegistryKey.of(RegistryKeys.WORLD, packetByteBuf.readIdentifier());
             server.execute(() -> openInv(server,player,pos,key));
@@ -59,7 +59,7 @@ public class OpenInventoryPacket{
         tickMap.put(player,new TickList(blockState.getBlock(),world,pos,blockState));
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (blockEntity instanceof ShulkerBoxBlockEntity entity &&
-                !world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(blockState.get(FACING), 0.0f, 0.5f).offset(pos).contract(1.0E-6)) &&
+                !world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(0.0f,blockState.get(FACING),  0.5f).offset(pos).contract(1.0E-6)) &&
                 entity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED) {
             System.out.println("openFail" + pos);
             openReturn(player,blockState,false);
@@ -69,7 +69,7 @@ public class OpenInventoryPacket{
         try {
             handler = ((BlockWithEntity)blockState.getBlock()).createScreenHandlerFactory(blockState, world, pos);
         } catch (Exception ignored) {}
-        ActionResult r = blockState.onUse(world, player, Hand.MAIN_HAND, new BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false));
+        ActionResult r = blockState.onUse(world, player, new BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false));
 
         if ((r != null && !r.equals(ActionResult.CONSUME)) || handler == null) {
             System.out.println("openFail" + pos);
