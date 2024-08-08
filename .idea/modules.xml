@@ -4,17 +4,38 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Minecraft.MyMod.remote-inventory-01.client.iml" filepath="$PROJECT_DIR$/.idea/modules/Minecraft.MyMod.remote-inventory-01.client.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyMod.remote-inventory-01.client.iml" filepath="$PROJECT_DIR$/.idea/modules/MyMod.remote-inventory-01.client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyMod.remote-inventory-01.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MyMod.remote-inventory-01.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MyMod.remote-inventory-01.test.iml" filepath="$PROJECT_DIR$/.idea/modules/MyMod.remote-inventory-01.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.zxy.remote-inventory-01.client.iml" filepath="$PROJECT_DIR$/.idea/modules/com.zxy.remote-inventory-01.client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.zxy.remote-inventory-01.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.zxy.remote-inventory-01.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.zxy.remote-inventory-01.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.zxy.remote-inventory-01.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.18.2/carpet-wuhu-addition.1.18.2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.18.2/carpet-wuhu-addition.1.18.2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.18.2/carpet-wuhu-addition.1.18.2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.18.2/carpet-wuhu-addition.1.18.2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.19.4/carpet-wuhu-addition.1.19.4.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.19.4/carpet-wuhu-addition.1.19.4.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.19.4/carpet-wuhu-addition.1.19.4.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.19.4/carpet-wuhu-addition.1.19.4.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.1/carpet-wuhu-addition.1.20.1.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.1/carpet-wuhu-addition.1.20.1.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.1/carpet-wuhu-addition.1.20.1.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.1/carpet-wuhu-addition.1.20.1.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.2/carpet-wuhu-addition.1.20.2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.2/carpet-wuhu-addition.1.20.2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.2/carpet-wuhu-addition.1.20.2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.2/carpet-wuhu-addition.1.20.2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.4/carpet-wuhu-addition.1.20.4.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.4/carpet-wuhu-addition.1.20.4.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.4/carpet-wuhu-addition.1.20.4.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.4/carpet-wuhu-addition.1.20.4.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.6/carpet-wuhu-addition.1.20.6.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.6/carpet-wuhu-addition.1.20.6.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.6/carpet-wuhu-addition.1.20.6.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.6/carpet-wuhu-addition.1.20.6.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.21.0/carpet-wuhu-addition.1.21.0.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.21.0/carpet-wuhu-addition.1.21.0.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.21.0/carpet-wuhu-addition.1.21.0.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.21.0/carpet-wuhu-addition.1.21.0.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/carpet-wuhu-addition.client.iml" filepath="$PROJECT_DIR$/.idea/modules/carpet-wuhu-addition.client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/carpet-wuhu-addition.main.iml" filepath="$PROJECT_DIR$/.idea/modules/carpet-wuhu-addition.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/carpet-wuhu-addition.test.iml" filepath="$PROJECT_DIR$/.idea/modules/carpet-wuhu-addition.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/game.Minecraft.MyMod.remote-inventory-01.client.iml" filepath="$PROJECT_DIR$/.idea/modules/game.Minecraft.MyMod.remote-inventory-01.client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/game.Minecraft.MyMod.remote-inventory-01.client~1.iml" filepath="$PROJECT_DIR$/.idea/modules/game.Minecraft.MyMod.remote-inventory-01.client~1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-inventory-01.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-inventory-01.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-inventory-01.client.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-inventory-01.client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-inventory-01.main.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-inventory-01.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/remote-inventory-01.test.iml" filepath="$PROJECT_DIR$/.idea/modules/remote-inventory-01.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.18.2/remote-inventory-01.1.18.2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.18.2/remote-inventory-01.1.18.2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.18.2/remote-inventory-01.1.18.2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.18.2/remote-inventory-01.1.18.2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.19.4/remote-inventory-01.1.19.4.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.19.4/remote-inventory-01.1.19.4.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.19.4/remote-inventory-01.1.19.4.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.19.4/remote-inventory-01.1.19.4.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.1/remote-inventory-01.1.20.1.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.1/remote-inventory-01.1.20.1.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.1/remote-inventory-01.1.20.1.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.1/remote-inventory-01.1.20.1.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.2/remote-inventory-01.1.20.2.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.2/remote-inventory-01.1.20.2.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.2/remote-inventory-01.1.20.2.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.2/remote-inventory-01.1.20.2.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.4/remote-inventory-01.1.20.4.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.4/remote-inventory-01.1.20.4.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.4/remote-inventory-01.1.20.4.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.4/remote-inventory-01.1.20.4.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.6/remote-inventory-01.1.20.6.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.6/remote-inventory-01.1.20.6.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.20.6/remote-inventory-01.1.20.6.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.20.6/remote-inventory-01.1.20.6.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.21.0/remote-inventory-01.1.21.0.main.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.21.0/remote-inventory-01.1.21.0.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/versions/1.21.0/remote-inventory-01.1.21.0.test.iml" filepath="$PROJECT_DIR$/.idea/modules/versions/1.21.0/remote-inventory-01.1.21.0.test.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,67 @@
+{
+    "schemaVersion": 1,
+    "id": "litematica-printer",
+    "version": "2.4+20240729",
+    "icon": "assets/litematica-printer/icon.png",
+    "name": "litematica-printer",
+    "description": "Printer All Version",
+    "authors": [
+        {
+            "name": "zhaixianyu",
+            "contact": {
+                "homepage": "https://github.com/zhaixianyu"
+            }
+        }
+    ],
+    "contact": {
+        "homepage": "https://space.bilibili.com/31545812",
+        "issues": "https://github.com/zhaixianyu/litematica-printer/issues",
+        "sources": "https://github.com/zhaixianyu/litematica-printer"
+    },
+    "license": "CC0-1.0",
+    "environment": "*",
+    "entrypoints": {
+        
+    },
+    "depends": {
+        "malilib": "*",
+        "java": ">=21",
+        "minecraft": [
+            "1.18.2",
+            "1.19.4",
+            "1.20.1",
+            "1.20.2",
+            "1.20.4",
+            "1.20.6",
+            "1.21"
+        ]
+    },
+    "custom": {
+        "modmenu": {
+            "parent": "carpet"
+        }
+    },
+    "jars": [
+        {
+            "file": "META-INF/jars/litematica-printer-1.18.2-2.4+20240729.jar"
+        },
+        {
+            "file": "META-INF/jars/litematica-printer-1.19.4-2.4+20240729.jar"
+        },
+        {
+            "file": "META-INF/jars/litematica-printer-1.20.1-2.4+20240729.jar"
+        },
+        {
+            "file": "META-INF/jars/litematica-printer-1.20.2-2.4+20240729.jar"
+        },
+        {
+            "file": "META-INF/jars/litematica-printer-1.20.4-2.4+20240729.jar"
+        },
+        {
+            "file": "META-INF/jars/litematica-printer-1.20.6-2.4+20240729.jar"
+        },
+        {
+            "file": "META-INF/jars/litematica-printer-1.21-2.4+20240729.jar"
+        }
+    ]
+}
