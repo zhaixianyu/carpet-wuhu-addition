@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import static com.zxy.carpet_wh_addition.config.CarpetWuHuSettings.upDataWildDragonFight;
+
 @Mixin(EnderDragonEntity.class)
 public class EnderDragoEntityMixin extends MobEntity{
     @Shadow
@@ -25,7 +27,7 @@ public class EnderDragoEntityMixin extends MobEntity{
     @Inject(at = @At(value = "TAIL"), method = "updatePostDeath")
     private void test(CallbackInfo ci) {
         EnderDragonFight fight1 = fight;
-        if(fight1 == null){
+        if(fight1 == null && upDataWildDragonFight){
             fight = ((ServerWorld)this.getWorld()).getEnderDragonFight();
         }
     }

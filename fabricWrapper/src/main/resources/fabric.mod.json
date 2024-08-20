@@ -24,7 +24,6 @@
 
   },
   "depends": {
-    "malilib": "*",
     "java": ">=21"
   },
   "custom": {

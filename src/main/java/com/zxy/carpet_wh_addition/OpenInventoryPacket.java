@@ -7,9 +7,9 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ChunkTicketType;
@@ -28,29 +28,28 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import static com.zxy.carpet_wh_addition.config.CarpetWuHuSettings.remoteOpenInventory;
 import static net.minecraft.block.ShulkerBoxBlock.FACING;
 //#if MC > 12004
+//$$ import net.minecraft.block.Block;
 //$$ import net.minecraft.network.RegistryByteBuf;
 //$$ import net.minecraft.network.codec.PacketCodec;
 //$$ import net.minecraft.network.codec.PacketCodecs;
 //$$ import net.minecraft.network.packet.CustomPayload;
 //$$ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-//$$ import static me.aleksilassila.litematica.printer.printer.zxy.inventory.OpenInventoryPacket.HelloPackage.HELLO_REMOTE_INTERACTIONS_ID;
-//$$ import static me.aleksilassila.litematica.printer.printer.zxy.inventory.OpenInventoryPacket.OpenPackage.OPEN_INVENTORY_ID;
-//$$ import static me.aleksilassila.litematica.printer.printer.zxy.inventory.OpenInventoryPacket.ReturnPackage.OPEN_RETURN_ID;
-public class OpenInventoryPacket {
+//$$
 //#endif
 
+//#if MC > 11802
+//$$ import net.minecraft.registry.RegistryKeys;
+//#else
+import net.minecraft.util.registry.Registry;
+//#endif
+public class OpenInventoryPacket {
     private static final ChunkTicketType<ChunkPos> OPEN_TICKET =
             ChunkTicketType.create("openInv", Comparator.comparingLong(ChunkPos::toLong), 2);
     public static HashMap<ServerPlayerEntity, TickList> tickMap = new HashMap<>();
-    public static boolean openIng = false;
-    public static RegistryKey<World> key = null;
-    public static BlockPos pos = null;
-    public static boolean isRemote = false;
-    public static boolean clientTry = false;
-    public static long clientTryTime = 0;
-    public static long remoteTime = 0;
+
     //#if MC > 12006
     //$$ private static final Identifier OPEN_INVENTORY = Identifier.of("remoteinventory", "open_inventory");
     //$$ private static final Identifier OPEN_RETURN = Identifier.of("openreturn", "open_return");
@@ -131,46 +130,21 @@ public class OpenInventoryPacket {
     //$$     }
     //$$ }
     //#endif
-    public static void registerClientReceivePacket() {
-        //#if MC > 12004
-        //$$ ClientPlayNetworking.registerGlobalReceiver(OPEN_RETURN_ID, (payload, context) -> {
-        //$$     try {
-        //$$         if (payload instanceof ReturnPackage returnPackage) {
-        //$$             boolean isOpen = returnPackage.isOpen;
-        //$$             BlockState state = returnPackage.state;
-        //$$             client.execute(() -> openReturn(isOpen,state));
-        //$$         }
-        //$$     } catch (Exception ignored) {
-        //$$         Messager.actionBar("服务端回复异常，箱子追踪库存无法更新");
-        //$$     }
-        //$$ });
-        //$$ ClientPlayNetworking.registerGlobalReceiver(HELLO_REMOTE_INTERACTIONS_ID,(openInventoryPacket,context) -> {
-        //$$     isRemote = true;
-        //$$     client.execute(() -> {
-        //$$         if (LitematicaMixinMod.AUTO_INVENTORY.getBooleanValue()) {
-        //$$             Messager.actionBar("已自动启用远程交互容器!!!");
-        //$$             LitematicaMixinMod.INVENTORY.setBooleanValue(true);
-        //$$         }
-        //$$     });
-        //$$ });
-        //#else
 
-        //#endif
-    }
     public static void init(){
         //#if MC > 12004
-        //$$ PayloadTypeRegistry.playC2S().register(OPEN_INVENTORY_ID, OpenPackage.CODEC);
-        //$$ PayloadTypeRegistry.playC2S().register(OPEN_RETURN_ID, ReturnPackage.CODEC);
-        //$$ PayloadTypeRegistry.playC2S().register(HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
-        //$$ PayloadTypeRegistry.playS2C().register(OPEN_INVENTORY_ID, OpenPackage.CODEC);
-        //$$ PayloadTypeRegistry.playS2C().register(OPEN_RETURN_ID, ReturnPackage.CODEC);
-        //$$ PayloadTypeRegistry.playS2C().register(HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
+        //$$ PayloadTypeRegistry.playC2S().register(OpenPackage.OPEN_INVENTORY_ID, OpenPackage.CODEC);
+        //$$ PayloadTypeRegistry.playC2S().register(ReturnPackage.OPEN_RETURN_ID, ReturnPackage.CODEC);
+        //$$ PayloadTypeRegistry.playC2S().register(HelloPackage.HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
+        //$$ PayloadTypeRegistry.playS2C().register(OpenPackage.OPEN_INVENTORY_ID, OpenPackage.CODEC);
+        //$$ PayloadTypeRegistry.playS2C().register(ReturnPackage.OPEN_RETURN_ID, ReturnPackage.CODEC);
+        //$$ PayloadTypeRegistry.playS2C().register(HelloPackage.HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
         //#endif
     }
 
     public static void registerReceivePacket() {
         //#if MC > 12004
-        //$$ ServerPlayNetworking.registerGlobalReceiver(OPEN_INVENTORY_ID, (payload,context) -> {
+        //$$ ServerPlayNetworking.registerGlobalReceiver(OpenPackage.OPEN_INVENTORY_ID, (payload,context) -> {
         //$$     if (payload instanceof OpenPackage packetByteBuf) {
         //$$         context.player().server.execute(() -> {
         //$$             openInv(context.player().server, context.player(), packetByteBuf.pos, packetByteBuf.world);
@@ -181,9 +155,9 @@ public class OpenInventoryPacket {
         ServerPlayNetworking.registerGlobalReceiver(OPEN_INVENTORY, (server, player, serverPlayNetworkHandler, packetByteBuf, packetSender) -> {
             BlockPos pos = packetByteBuf.readBlockPos();
             //#if MC < 11904
-            //$$ RegistryKey<World> key = RegistryKey.of(Registry.WORLD_KEY, packetByteBuf.readIdentifier());
+            RegistryKey<World> key = RegistryKey.of(Registry.WORLD_KEY, packetByteBuf.readIdentifier());
             //#else
-            RegistryKey<World> key = RegistryKey.of(RegistryKeys.WORLD, packetByteBuf.readIdentifier());
+            //$$ RegistryKey<World> key = RegistryKey.of(RegistryKeys.WORLD, packetByteBuf.readIdentifier());
             //#endif
             server.execute(() -> openInv(server, player, pos, key));
         });
@@ -191,6 +165,7 @@ public class OpenInventoryPacket {
     }
 
     public static void helloRemote(ServerPlayerEntity player) {
+        if (!remoteOpenInventory) return;
         //#if MC > 12004
         //$$ ServerPlayNetworking.send(player,new HelloPackage());
         //#else
@@ -199,6 +174,7 @@ public class OpenInventoryPacket {
     }
 
     public static void openInv(MinecraftServer server, ServerPlayerEntity player, BlockPos pos, RegistryKey<World> key) {
+        if(!remoteOpenInventory) return;
         ServerWorld world = server.getWorld(key);
         if (world == null) return;
         BlockState blockState = world.getBlockState(pos);
@@ -222,17 +198,6 @@ public class OpenInventoryPacket {
             openReturn(player, blockState, false);
             return;
         }
-//        NamedScreenHandlerFactory handler = null;
-//        try {
-//            //#if MC < 12005
-//            handler = ((BlockWithEntity) blockState.getBlock()).createScreenHandlerFactory(blockState, world, pos);
-//            //#else
-//            //$$ handler = ((me.aleksilassila.litematica.printer.mixin.openinv.BlockWithEntityMixin) blockState.getBlock()).createScreenHandlerFactory(blockState, world, pos);
-//            //#endif
-//        } catch (Exception ignored) {
-//            openReturn(player, blockState, false);
-//            return;
-//        }
 
         //#if MC > 12004
         //$$ ActionResult r = blockState.onUse(world, player, new BlockHitResult(Vec3d.ofCenter(pos), Direction.UP, pos, false));
@@ -260,32 +225,21 @@ public class OpenInventoryPacket {
         //#endif
     }
 
-    public static void reSet() {
-        key = null;
-        pos = null;
-        openIng = false;
-    }
-
-    //    //#if MC > 12004
-//    @Override
-//    public Id<? extends CustomPayload> getId() {
-//        return null;
-//    }
-//    //#else
-//    //$$
-//    //#endif
-    public static boolean isContainer(BlockEntity blockEntity){
-        if(blockEntity == null) return false;
-        BlockEntityType<?> type = blockEntity.getType();
-        return  type == BlockEntityType.CHEST || type == BlockEntityType.ENDER_CHEST ||
-                type == BlockEntityType.SHULKER_BOX || type == BlockEntityType.BARREL ||
-                type == BlockEntityType.HOPPER || type == BlockEntityType.DISPENSER ||
-                type == BlockEntityType.DROPPER || type == BlockEntityType.BREWING_STAND ||
-                type == BlockEntityType.BLAST_FURNACE || type == BlockEntityType.SMOKER
-                //#if MC > 12002
-                //$$ ||
-                //$$ type == BlockEntityType.CRAFTER
-                //#endif
-                ;
+    public static boolean isContainer(BlockEntity blockEntity) {
+        return blockEntity instanceof Inventory;
+//        if(blockEntity == null) return false;
+//
+//
+//        BlockEntityType<?> type = blockEntity.getType();
+//        return  type == BlockEntityType.CHEST || type == BlockEntityType.ENDER_CHEST ||
+//                type == BlockEntityType.SHULKER_BOX || type == BlockEntityType.BARREL ||
+//                type == BlockEntityType.HOPPER || type == BlockEntityType.DISPENSER ||
+//                type == BlockEntityType.DROPPER || type == BlockEntityType.BREWING_STAND ||
+//                type == BlockEntityType.BLAST_FURNACE || type == BlockEntityType.SMOKER
+//                //#if MC > 12002
+//                ||
+//                type == BlockEntityType.CRAFTER
+//                //#endif
+//                ;
     }
 }

@@ -2,17 +2,20 @@
   "required": true,
   "minVersion": "0.8",
   "package": "com.zxy.carpet_wh_addition.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ArmorStandEntityMixin",
     "EnderDragoEntityMixin",
+    "PlayerEntityMixin",
     "Test",
     "openInv.MixinLootableContainerBlockEntity",
     "openInv.MixinServerPlayerEntity",
     "openInv.MixinServerWorld",
     "openInv.PlayerManagerMixin",
     "PlacementAndDestruction.ServerPlayerInteractionManagerMixin",
-    "PlacementAndDestruction.ServerPlayNetworkHandlerMixin"
+    "PlacementAndDestruction.ServerPlayNetworkHandlerMixin",
+    "setting.ParsedRuleAccessor",
+    "setting.SettingsManagerAccessor"
   ],
   "client": [
   ],

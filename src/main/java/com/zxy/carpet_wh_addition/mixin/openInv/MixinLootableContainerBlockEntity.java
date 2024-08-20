@@ -20,10 +20,14 @@ public class MixinLootableContainerBlockEntity extends BlockEntity {
         super(type, pos, state);
     }
 
+    //#if MC > 12004
+    //$$
+    //#else
     @Inject(at = @At("HEAD"), method = "canPlayerUse", cancellable = true)
     public void canPlayerUse(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
         for (ServerPlayerEntity player1 : OpenInventoryPacket.playerlist) {
             if (player.equals(player1)) cir.setReturnValue(true);
         }
     }
+    //#endif
 }

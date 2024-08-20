@@ -1,30 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "remote-interactions",
-  "version": "${version}",
-  "name": "remote-interactions",
-  "description": "",
+  "id": "${mod_id}-${minecraft_version_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "wuhu!!",
   "authors": [],
   "contact": {
-    "website": "https://space.bilibili.com/31545812",
+    "website": "${mod_homepage}",
+    "homepage": "${mod_sources}",
+    "sources": "${mod_sources}",
     "repo": "https://github.com/zhaixianyu"
   },
   "license": "All-Rights-Reserved",
-  "icon": "assets/remote-interactions/icon.png",
+  "icon": "assets/carpet_wh_addition/icon.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-    ],
     "main": [
-      "com.zxy.remote_interactions.RemoteInteractions"
+      "com.zxy.carpet_wh_addition.CarpetWuHuAddition"
     ]
   },
   "mixins": [
     "remote-interactions.mixins.json"
   ],
   "depends": {
-    "fabricloader": "*",
-    "fabric": "*",
-    "minecraft": "*"
+    "minecraft": "${minecraft_dependency}"
   }
 }
