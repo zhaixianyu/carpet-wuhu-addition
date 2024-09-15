@@ -32,7 +32,7 @@ import red.jackf.chesttracker.impl.memory.MemoryBankImpl;
 import red.jackf.whereisit.api.SearchRequest;
 import red.jackf.whereisit.client.api.events.SearchRequestPopulator;
 //#else
-
+//$$
 //#endif
 
 import java.util.*;
@@ -101,9 +101,9 @@ public class LitematicaHelper {
                     String missingColor = missing == 0 ? GuiBase.TXT_GREEN : GuiBase.TXT_GOLD;
                     String stackName = stack.getRarity().
                             //#if MC > 12004
-                            getFormatting()
+                            //$$ getFormatting()
                             //#else
-                            //$$ formatting
+                            formatting
                             //#endif
                             + stack.getName().getString() + GuiBase.TXT_RST;
 
@@ -198,7 +198,7 @@ public class LitematicaHelper {
         blockPos.addAll(blockPosMemoryMap.keySet());
 
         //#else
-
+        //$$
         //#endif
         return blockPos;
     }
@@ -230,6 +230,6 @@ public class LitematicaHelper {
         return null;
     }
     //#else
-
+    //$$
     //#endif
 }

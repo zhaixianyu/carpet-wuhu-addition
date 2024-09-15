@@ -41,7 +41,7 @@ public class SelectionManagerMixin {
         if (schematicWorld == null || !Configs.LITEMATICA_HELPER.getBooleanValue()) return original.call(world,player,maxDistance,sneakToOffset);
 
         BlockHitResult blockHitResult = traceToSchematicWorld(player, 200, true, true);
-        if(blockHitResult == null){
+        if(blockHitResult == null || schematicWorld.getBlockState(blockHitResult.getBlockPos()).isAir()){
             return original.call(world, player, maxDistance, sneakToOffset);
         }
         BlockPos pos = blockHitResult.getBlockPos();
