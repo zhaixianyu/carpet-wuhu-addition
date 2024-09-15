@@ -1,8 +1,7 @@
 package com.zxy.wuhuclient.mixin;
 
 import com.zxy.wuhuclient.Utils.InventoryUtils;
-import com.zxy.wuhuclient.featuresList.SyncInventory;
-import com.zxy.wuhuclient.featuresList.Synthesis;
+import com.zxy.wuhuclient.features_list.Synthesis;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.packet.s2c.play.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.zxy.wuhuclient.Utils.InventoryUtils.switchInv;
-import static com.zxy.wuhuclient.featuresList.SyncInventory.num;
-import static com.zxy.wuhuclient.featuresList.SyncInventory.syncInv;
+import static com.zxy.wuhuclient.features_list.SyncInventory.num;
+import static com.zxy.wuhuclient.features_list.SyncInventory.syncInv;
 
-@Mixin(ClientPlayNetworkHandler.class)
+@Mixin(value = ClientPlayNetworkHandler.class)
 public class ClientPlayNetworkHandlerMixin {
     @Inject(at = @At("TAIL"),method = "onInventory")
     public void onInventory(InventoryS2CPacket packet, CallbackInfo ci){

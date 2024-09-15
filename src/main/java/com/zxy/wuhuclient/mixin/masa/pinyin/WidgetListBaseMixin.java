@@ -1,4 +1,4 @@
-package com.zxy.wuhuclient.mixin.masa;
+package com.zxy.wuhuclient.mixin.masa.pinyin;
 
 import com.zxy.wuhuclient.Utils.PinYinSearch;
 import com.zxy.wuhuclient.config.Configs;
@@ -20,9 +20,7 @@ public class WidgetListBaseMixin{
 //        System.out.println("entryString  "+ entryString);
 //        System.out.println("translate  "+ translate);
 //        System.out.println("translate2  "+ translate2);
-        if (PinYinSearch.getPinYin(translate).stream().anyMatch(str -> str.contains(filterText))
-//                || PinYinSearch.getPinYin(translate2).stream().anyMatch(str -> str.contains(filterText))
-                || translate.contains(filterText)) {
+        if (PinYinSearch.hasPinYin(translate,filterText) || translate.contains(filterText)) {
             cir.setReturnValue(true);
         }
     }

@@ -9,6 +9,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PinYinSearch {
     public static void main(String[] args){
@@ -35,6 +36,9 @@ public class PinYinSearch {
         return getStrings();
     }
 
+    public static boolean hasPinYin(String zh,String py){
+        return getPinYin(zh).stream().anyMatch(s->s.contains(py));
+    }
     @NotNull
     private static ArrayList<String> getStrings() {
         ArrayList<String> pys1 = new ArrayList<>();

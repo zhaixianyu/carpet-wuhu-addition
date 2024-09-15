@@ -20,11 +20,11 @@ import java.util.List;
 public class SuffixArrayMixin<T> {
     @Inject(at = @At("TAIL"),method = "findAll")
     public void findAll1(String text, CallbackInfoReturnable<List<T>> cir){
-        if (!Configs.PINYIN.getBooleanValue())return;
+        if (!Configs.PINYIN.getBooleanValue()) return;
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if (player != null && player.currentScreenHandler instanceof CreativeInventoryScreen.CreativeScreenHandler) {
             Registries.ITEM.stream().forEach(item -> {
-                if (PinYinSearch.getPinYin(item.getName().getString().toLowerCase()).stream().anyMatch(str -> str.contains(text)) || item.toString().contains(text)) {
+                if (PinYinSearch.hasPinYin(item.getName().getString().toLowerCase(),text) || item.toString().contains(text)) {
                     ((CreativeInventoryScreen.CreativeScreenHandler) player.currentScreenHandler).itemList.add(new ItemStack(item));
                 }
             });

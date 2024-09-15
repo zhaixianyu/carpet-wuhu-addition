@@ -1,12 +1,7 @@
-package com.zxy.wuhuclient.featuresList;
+package com.zxy.wuhuclient.features_list;
 
-import com.zxy.wuhuclient.Utils.PinYinSearch;
 import com.zxy.wuhuclient.config.Configs;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.mob.ZombieVillagerEntity;
-import net.minecraft.item.Items;
-
-import java.util.Locale;
 
 public class Test {
     public static void tick(){

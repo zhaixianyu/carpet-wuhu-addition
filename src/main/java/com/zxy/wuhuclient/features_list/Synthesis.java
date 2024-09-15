@@ -1,4 +1,4 @@
-package com.zxy.wuhuclient.featuresList;
+package com.zxy.wuhuclient.features_list;
 
 
 import com.zxy.wuhuclient.config.Configs;
@@ -8,14 +8,10 @@ import fi.dy.masa.itemscroller.recipes.RecipeStorage;
 import fi.dy.masa.malilib.util.InventoryUtils;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.mob.ShulkerEntity;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -41,8 +37,6 @@ import net.minecraft.world.GameRules;
 
 //#if MC < 12001
 //$$ import net.minecraft.inventory.CraftingInventory;
-//$$ import net.minecraft.inventory.Inventory;
-//$$ import net.minecraft.screen.slot.CraftingResultSlot;
 //#elseif MC == 12001
 //$$ import net.minecraft.inventory.RecipeInputInventory;
 //#else
@@ -53,8 +47,8 @@ import net.minecraft.recipe.RecipeEntry;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static com.zxy.wuhuclient.Utils.InventoryUtils.isInventory;
 import static com.zxy.wuhuclient.Utils.ScreenManagement.closeScreen;
-import static net.minecraft.block.ShulkerBoxBlock.FACING;
 
 
 public class Synthesis {
@@ -95,26 +89,6 @@ public class Synthesis {
     public static void onInventory() {
         if(!Configs.SYNTHESIS.getBooleanValue()) return;
         invUpdated = true;
-    }
-
-    public static boolean isInventory(BlockPos pos) {
-//        if (client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
-//            BlockPos pos = ((BlockHitResult) client.crosshairTarget).getBlockPos();
-        if (client.world == null) return false;
-        BlockState blockState = client.world.getBlockState(pos);
-        BlockEntity blockEntity = client.world.getBlockEntity(pos);
-        try {
-            if (((BlockWithEntity) blockState.getBlock()).createScreenHandlerFactory(blockState, client.world, pos) == null ||
-                    (blockEntity instanceof ShulkerBoxBlockEntity entity &&
-                            !client.world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(blockState.get(FACING), 0.0f, 0.5f).offset(pos).contract(1.0E-6)) &&
-                            entity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED)) {
-                client.inGameHud.setOverlayMessage(Text.of("目标无法打开"), false);
-                return false;
-            }
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
     }
 
     public static void start(BlockPos pos) {
@@ -195,7 +169,12 @@ public class Synthesis {
         }
         for (Slot slot : client.player.currentScreenHandler.slots) {
             ItemStack stack = slot.getStack();
-            if (stack.isEmpty() || stack.hasNbt()) continue;
+            //#if MC > 12004
+
+            if (stack.isEmpty() || stack.getComponents().isEmpty()) continue;
+            //#else
+            //$$ if (stack.isEmpty() || stack.hasNbt()) continue;
+            //#endif
             recipeMap.forEach((k, v) -> {
                 int num = stack.getMaxCount() == 1 ? 0 : 1;
                 if (stack.getItem().equals(k)) recipeMap.put(k, v + (stack.getCount() - num));
@@ -370,7 +349,11 @@ public class Synthesis {
             //$$ CraftingRecipe recipeEntry = optional.isPresent() ? optional.get() : null;
             //#else
             RecipeInputInventory rec = ((CraftingScreenHandlerMixin)sc1).getInput();
-            Optional<RecipeEntry<CraftingRecipe>> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, rec, world);
+            //#if MC < 12100
+            //$$ Optional<RecipeEntry<CraftingRecipe>> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, rec, world);
+            //#else
+            Optional<RecipeEntry<CraftingRecipe>> optional = world.getRecipeManager().getFirstMatch(RecipeType.CRAFTING, rec.createRecipeInput(), world);
+            //#endif
             CraftingRecipe recipe = optional.map(RecipeEntry::value).orElse(null);
             RecipeEntry<?> recipeEntry = optional.orElse(null);
             //#endif
@@ -382,7 +365,11 @@ public class Synthesis {
                         ((ClientPlayerEntity) player).getRecipeBook().contains(recipeEntry)))
                 {
                     //#if MC > 11802
-                    stack = recipe.craft(rec, MinecraftClient.getInstance().getNetworkHandler().getRegistryManager());
+                        //#if MC >= 12100
+                        stack = recipe.craft(rec.createRecipeInput(), MinecraftClient.getInstance().getNetworkHandler().getRegistryManager());
+                        //#else
+                        //$$ stack = recipe.craft(rec, MinecraftClient.getInstance().getNetworkHandler().getRegistryManager());
+                        //#endif
                     //#else
                     //$$ stack = recipe.craft(rec);
                     //#endif

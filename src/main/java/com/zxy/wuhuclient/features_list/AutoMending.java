@@ -1,8 +1,7 @@
-package com.zxy.wuhuclient.featuresList;
+package com.zxy.wuhuclient.features_list;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -10,7 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
-import java.util.ArrayList;
+import static com.zxy.wuhuclient.Utils.InventoryUtils.getEnchantmentLevel;
 
 
 public class AutoMending {
@@ -25,20 +24,20 @@ public class AutoMending {
         tick = 0;
         ScreenHandler sc = player.currentScreenHandler;
         if (!sc.equals(player.playerScreenHandler)) return;
-
+        ItemStack stack = sc.slots.get(45).getStack();
         if (run) {
-            if(!sc.slots.get(45).getStack().isDamaged() &&
-                    EnchantmentHelper.getLevel(Enchantments.MENDING,sc.getSlot(45).getStack()) > 0) reSwitch();
+            if(!stack.isDamaged() &&
+                    getEnchantmentLevel(stack,Enchantments.MENDING) > 0) reSwitch();
             else return;
         }
         if (mc == null || !player.equals(mc.player)) return;
-        if(!sc.slots.get(45).getStack().isDamaged() &&
-                EnchantmentHelper.getLevel(Enchantments.MENDING,sc.getSlot(45).getStack()) > 0) return;
+        if(!stack.isDamaged() &&
+                getEnchantmentLevel(stack,Enchantments.MENDING) > 0) return;
         for (int i = 0; i < sc.slots.size(); i++) {
             ItemStack item = sc.slots.get(i).getStack();
             if (
                     item.isOf(Items.AIR) ||
-                            EnchantmentHelper.getLevel(Enchantments.MENDING, item) <= 0 ||
+                            getEnchantmentLevel(sc.slots.get(i).getStack(),Enchantments.MENDING) <= 0 ||
                             !item.isDamaged() ||
                             item.equals(player.getMainHandStack()) ||
                             i == 45 || i == 5 || i == 6 || i == 7 || i == 8

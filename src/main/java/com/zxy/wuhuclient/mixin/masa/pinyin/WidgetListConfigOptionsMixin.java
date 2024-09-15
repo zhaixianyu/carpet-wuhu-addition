@@ -1,4 +1,4 @@
-package com.zxy.wuhuclient.mixin.masa;
+package com.zxy.wuhuclient.mixin.masa.pinyin;
 
 import com.zxy.wuhuclient.config.Configs;
 import fi.dy.masa.malilib.config.IConfigBase;

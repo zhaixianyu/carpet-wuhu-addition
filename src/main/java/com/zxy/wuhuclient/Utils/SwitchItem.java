@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.zxy.wuhuclient.Utils.ScreenManagement.closeScreen;
-import static com.zxy.wuhuclient.featuresList.Synthesis.client;
+import static com.zxy.wuhuclient.features_list.Synthesis.client;
 
 public class SwitchItem {
 //    public static boolean switchIng = false;

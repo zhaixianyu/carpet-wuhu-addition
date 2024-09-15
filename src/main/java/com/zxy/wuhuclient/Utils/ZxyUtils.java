@@ -1,8 +1,9 @@
 package com.zxy.wuhuclient.Utils;
 
-import com.zxy.wuhuclient.featuresList.SyncInventory;
-import com.zxy.wuhuclient.featuresList.Synthesis;
-import com.zxy.wuhuclient.featuresList.Test;
+import com.zxy.wuhuclient.features_list.SyncInventory;
+import com.zxy.wuhuclient.features_list.Synthesis;
+import com.zxy.wuhuclient.features_list.Test;
+import com.zxy.wuhuclient.features_list.litematica_helper.LitematicaHelper;
 import fi.dy.masa.litematica.data.DataManager;
 import fi.dy.masa.litematica.selection.AreaSelection;
 import fi.dy.masa.litematica.selection.Box;
@@ -10,24 +11,40 @@ import fi.dy.masa.litematica.world.WorldSchematic;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
+
 import net.minecraft.registry.Registries;
 import net.minecraft.util.math.BlockPos;
-import java.util.LinkedList;
-import java.util.List;
+
+
+import java.util.*;
+
+import net.minecraft.text.Text;
+
+
+//#if MC > 11802
+import net.minecraft.text.MutableText;
+//#else
+//$$ import net.minecraft.text.TranslatableText;
+//#endif
 
 import static com.zxy.wuhuclient.Utils.ZxyUtils.TempData.max;
 import static com.zxy.wuhuclient.Utils.ZxyUtils.TempData.min;
 import static com.zxy.wuhuclient.WuHuClientMod.client;
+import static com.zxy.wuhuclient.config.Configs.SEARCH_BLOCK_COLOR;
+import static com.zxy.wuhuclient.config.Configs.SEARCH_BLOCK_LIST;
 import static fi.dy.masa.litematica.selection.SelectionMode.NORMAL;
 
 public class ZxyUtils {
     public static boolean isLoadQuiShulker = isLoadMod("quickshulker");
+    public static boolean isLoadChestTracker = isLoadMod("chesttracker");
     public static boolean isLoadMod(String modId){
         return FabricLoader.getInstance().isModLoaded(modId);
     }
     public static void tick(){
+        searchBlockThread();
         Synthesis.tick();
         Test.tick();
         if (SyncInventory.num==2) SyncInventory.syncInv();
@@ -114,7 +131,19 @@ public class ZxyUtils {
                             state = client.world.getBlockState(pos);
                         }
                         Block block = state.getBlock();
-                        if (Registries.BLOCK.getId(block).toString().contains(blockName)) {
+                        String string = Registries.BLOCK.getId(block).toString();
+                        String fix = null;
+                        if (blockName.length() > 2) {
+                            fix = blockName.substring(blockName.length() - 2);
+                            if ("-a".equals(fix)) {
+                                String substring = blockName.substring(0, blockName.length() - 2);
+                                if (substring.equals(string)) {
+                                    blocks.add(pos);
+                                }
+                                continue;
+                            }
+                        }
+                        if (string.contains(blockName)) {
                             blocks.add(pos);
                         }
                     }
@@ -122,5 +151,52 @@ public class ZxyUtils {
             }
         }
         return blocks;
+    }
+
+    public static String searchBlockId = "searchBlock";
+    public static boolean searchBlockSwitch = false;
+    public static void startSearchBlock(){
+        searchBlockSwitch = !searchBlockSwitch;
+        Set<BlockPos> highlightBlockPosList = HighlightBlockRenderer.getHighlightBlockPosList(searchBlockId);
+        if(!searchBlockSwitch && highlightBlockPosList != null) {
+            HighlightBlockRenderer.clear(searchBlockId);
+            return;
+        }
+        HighlightBlockRenderer.createHighlightBlockList(searchBlockId,SEARCH_BLOCK_COLOR);
+    }
+    public static boolean searchBlockIng = false;
+    public synchronized static void searchBlock(){
+            if(!searchBlockSwitch) return;
+            searchBlockIng = true;
+            LinkedHashSet<BlockPos> blockPos = new LinkedHashSet<>();
+            List<String> strings = SEARCH_BLOCK_LIST.getStrings();
+            for (String blockName : strings) {
+                LinkedList<BlockPos> blockPosLinkedList = siftBlock(blockName);
+                List<BlockPos> list = blockPosLinkedList.stream().distinct().toList();
+                blockPos.addAll(list);
+            }
+            HighlightBlockRenderer.setPos(searchBlockId,blockPos);
+    }
+    public static void searchBlockThread(){
+        if (!searchBlockIng) {
+            new Thread(() -> {
+                try {
+                    searchBlockIng = true;
+                    searchBlock();
+                    LitematicaHelper.instance.highlightInventoryBlock();
+                }finally {
+                    searchBlockIng = false;
+                }
+            }).start();
+        }
+    }
+    public static void actionBar(String message){
+        MinecraftClient minecraftClient = MinecraftClient.getInstance();
+        //#if MC > 11802
+        MutableText translatable = Text.translatable(message);
+        //#else
+        //$$ TranslatableText translatable = new TranslatableText(message);
+        //#endif
+        minecraftClient.inGameHud.setOverlayMessage(translatable,false);
     }
 }

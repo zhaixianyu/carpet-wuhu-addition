@@ -1,12 +1,13 @@
 package com.zxy.wuhuclient.config;
 
-import com.zxy.wuhuclient.featuresList.SyncInventory;
+import com.zxy.wuhuclient.features_list.SyncInventory;
 import fi.dy.masa.malilib.config.options.ConfigHotkey;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyAction;
 import net.minecraft.client.MinecraftClient;
 
+import static com.zxy.wuhuclient.Utils.ZxyUtils.startSearchBlock;
 import static com.zxy.wuhuclient.config.Configs.*;
 
 //监听按键
@@ -19,6 +20,8 @@ public class HotkeysCallback implements IHotkeyCallback {
         if(key == WUHU_CLIENT.getKeybind()){
             client.setScreen(new ConfigUi());
             return true;
+        }else if(key == SEARCH_BLOCK.getKeybind()){
+            startSearchBlock();
         }else if(key == SYNC_INVENTORY.getKeybind()){
             SyncInventory.startOrOffSyncInventory();
         }

@@ -23,6 +23,17 @@ pluginManagement {
 			name("Cotton")
 			url("https://server.bbkr.space/artifactory/libs-release")
 		}
+
+		resolutionStrategy {
+			eachPlugin {
+				switch (requested.id.id) {
+					case "com.replaymod.preprocess": {
+						useModule("com.github.Fallen-Breath:preprocessor:${requested.version}")
+						break
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -38,6 +49,8 @@ def versions = Arrays.asList(
 		"1.20.1",
 		"1.20.2",
 		"1.20.4",
+		"1.20.6",
+		"1.21.0",
 )
 
 for (String version : versions) {

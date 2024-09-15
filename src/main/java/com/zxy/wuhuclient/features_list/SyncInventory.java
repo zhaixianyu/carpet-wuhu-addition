@@ -1,11 +1,9 @@
-package com.zxy.wuhuclient.featuresList;
+package com.zxy.wuhuclient.features_list;
 
 import com.zxy.wuhuclient.Utils.HighlightBlockRenderer;
+import com.zxy.wuhuclient.Utils.InventoryUtils;
 import com.zxy.wuhuclient.Utils.ScreenManagement;
-import fi.dy.masa.malilib.util.Color4f;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.entity.mob.ShulkerEntity;
@@ -23,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import java.util.*;
+
+import static com.zxy.wuhuclient.Utils.InventoryUtils.equalsItem;
 import static com.zxy.wuhuclient.Utils.ZxyUtils.siftBlock;
 import static com.zxy.wuhuclient.WuHuClientMod.client;
 import static com.zxy.wuhuclient.config.Configs.*;
@@ -33,15 +33,14 @@ public class SyncInventory {
     public static ArrayList<ItemStack> targetBlockInv;
     public static int num = 0;
     static BlockPos blockPos = null;
-    static Color4f color4f;
-    static List<BlockPos> highlightPosList = new LinkedList<>();
+    static String syncInventoryId = "syncInventory";
+    static Set<BlockPos> highlightPosList = new LinkedHashSet<>();
     static Map<ItemStack, Integer> targetItemsCount = new HashMap<>();
     static Map<ItemStack, Integer> playerItemsCount = new HashMap<>();
 
     private static void getReadyColor() {
-        color4f = SYNC_INVENTORY_COLOR.getColor();
-        HighlightBlockRenderer.addHighlightMap(color4f);
-        highlightPosList = HighlightBlockRenderer.getPosList(color4f);
+        HighlightBlockRenderer.createHighlightBlockList(syncInventoryId,SYNC_INVENTORY_COLOR);
+        highlightPosList = HighlightBlockRenderer.getHighlightBlockPosList(syncInventoryId);
     }
 
     public static void startOrOffSyncInventory() {
@@ -53,12 +52,21 @@ public class SyncInventory {
             if (client.world != null) {
                 block = client.world.getBlockState(pos).getBlock();
                 BlockEntity blockEntity = client.world.getBlockEntity(pos);
+                boolean inventory = InventoryUtils.isInventory(pos);
                 try {
-                    if (((BlockWithEntity) blockState.getBlock()).createScreenHandlerFactory(blockState, client.world, pos) == null ||
+                    if ((inventory && blockState.createScreenHandlerFactory(client.world,pos) == null)  ||
                             (blockEntity instanceof ShulkerBoxBlockEntity entity &&
-                                    !client.world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(blockState.get(FACING), 0.0f, 0.5f).offset(pos).contract(1.0E-6)) &&
+                                    //#if MC > 12004
+                                    !client.world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(1.0F, blockState.get(FACING), 0.0F, 0.5F).offset(pos).contract(1.0E-6)) &&
+                                    //#else
+                                    //$$ !client.world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(blockState.get(FACING), 0.0f, 0.5f).offset(pos).contract(1.0E-6)) &&
+                                    //#endif
                                     entity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED)) {
                         client.inGameHud.setOverlayMessage(Text.of("容器无法打开"), false);
+                        return;
+                    }else if(!inventory) {
+                        client.inGameHud.setOverlayMessage(Text.of("这不是容器 无法同步"), false);
+                        return;
                     }
                 } catch (Exception e) {
                     client.inGameHud.setOverlayMessage(Text.of("这不是容器 无法同步"), false);
@@ -67,17 +75,18 @@ public class SyncInventory {
             }
             String blockName = Registries.BLOCK.getId(block).toString();
             syncPosList.addAll(siftBlock(blockName));
-            highlightPosList.addAll(syncPosList);
-
-
             if (!syncPosList.isEmpty()) {
                 if (client.player == null) return;
                 client.player.closeHandledScreen();
-                if (!openInv(pos, false)) return;
+                if (!openInv(pos, false)) {
+                    syncPosList = new LinkedList<>();
+                    return;
+                }
+                highlightPosList.addAll(syncPosList);
                 ScreenManagement.closeScreen++;
                 num = 1;
             }
-        } else {
+        } else if(!syncPosList.isEmpty()){
             highlightPosList.removeAll(syncPosList);
             syncPosList = new LinkedList<>();
             if (client.player != null) client.player.closeScreen();
@@ -87,8 +96,7 @@ public class SyncInventory {
     }
 
     public static boolean openInv(BlockPos pos, boolean ignoreThePrompt) {
-
-        if (client.player != null && client.player.squaredDistanceTo(Vec3d.ofCenter(pos)) > 25D) {
+        if (client.player != null && client.player.getEyePos().squaredDistanceTo(Vec3d.ofCenter(pos)) > 25D) {
             if (!ignoreThePrompt) client.inGameHud.setOverlayMessage(Text.of("距离过远无法打开容器"), false);
             return false;
         }
@@ -105,7 +113,11 @@ public class SyncInventory {
     public static void itemsCount(Map<ItemStack, Integer> itemsCount, ItemStack itemStack) {
         // 判断是否存在可合并的键
         Optional<Map.Entry<ItemStack, Integer>> entry = itemsCount.entrySet().stream()
-                .filter(e -> ItemStack.canCombine(e.getKey(), itemStack))
+                //#if MC > 12004
+                .filter(e -> ItemStack.areItemsAndComponentsEqual(e.getKey(), itemStack))
+                //#else
+                //$$ .filter(e -> ItemStack.canCombine(e.getKey(), itemStack))
+                //#endif
                 .findFirst();
 
         if (entry.isPresent()) {
@@ -152,7 +164,8 @@ public class SyncInventory {
                 if (SYNC_INVENTORY_CHECK.getBooleanValue() && !targetItemsCount.entrySet().stream()
                         .allMatch(target -> playerItemsCount.entrySet().stream()
                                 .anyMatch(player ->
-                                        ItemStack.canCombine(player.getKey(), target.getKey()) && target.getValue() <= player.getValue())))
+                                        equalsItem(player.getKey(), target.getKey()) && target.getValue() <= player.getValue())))
+
                     return;
 
 
@@ -180,8 +193,8 @@ public class SyncInventory {
                     ItemStack item2 = targetBlockInv.get(i).copy();
                     int currNum = item1.getCount();
                     int tarNum = item2.getCount();
-                    boolean same = ItemStack.canCombine(item1, item2.copy()) && !item1.isEmpty();
-                    if (ItemStack.canCombine(item1, item2) && currNum == tarNum) continue;
+                    boolean same = equalsItem(item1, item2.copy()) && !item1.isEmpty();
+                    if (equalsItem(item1, item2) && currNum == tarNum) continue;
                     //不和背包交互
                     if (same) {
                         //有多
@@ -200,7 +213,7 @@ public class SyncInventory {
                         ItemStack stack = sc.slots.get(i1).getStack();
                         ItemStack currStack = sc.slots.get(i).getStack();
                         currNum = currStack.getCount();
-                        boolean same2 = thereAreItems = ItemStack.canCombine(item2, stack);
+                        boolean same2 = thereAreItems = equalsItem(item2, stack);
                         if (same2 && !stack.isEmpty()) {
                             int i2 = stack.getCount();
                             client.interactionManager.clickSlot(sc.syncId, i1, 0, SlotActionType.PICKUP, client.player);

@@ -1,6 +1,9 @@
 package com.zxy.wuhuclient.Utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import fi.dy.masa.litematica.Litematica;
+import fi.dy.masa.litematica.data.DataManager;
+import fi.dy.masa.malilib.config.options.ConfigColor;
 import fi.dy.masa.malilib.event.RenderEventHandler;
 import fi.dy.masa.malilib.interfaces.IRenderer;
 import fi.dy.masa.malilib.render.RenderUtils;
@@ -18,22 +21,38 @@ import net.minecraft.util.shape.VoxelShapes;
 import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import static com.zxy.wuhuclient.Utils.ZxyUtils.searchBlockId;
 import static com.zxy.wuhuclient.WuHuClientMod.client;
+import static com.zxy.wuhuclient.config.Configs.SEARCH_BLOCK_LIMIT;
 
 public class HighlightBlockRenderer implements IRenderer {
+    public record HighlightTheProject(ConfigColor color4f, Set<BlockPos> pos){ }
     public static HighlightBlockRenderer instance = new HighlightBlockRenderer();
-    public static Map<Color4f,List<BlockPos>> highlightMap = new HashMap<>();
-    public static void addHighlightMap(Color4f color4f){
-        if(highlightMap.get(color4f) != null) return;
-        highlightMap.put(color4f, new LinkedList<>());
+    public static Map<String,HighlightTheProject> highlightTheProjectMap = new HashMap<>();
+    public static boolean shaderIng = false;
+    public static void createHighlightBlockList(String id,ConfigColor color4f){
+        if (highlightTheProjectMap.get(id) == null) {
+            highlightTheProjectMap.put(id,new HighlightTheProject(color4f,new LinkedHashSet<>()));
+        }
     }
-    public static List<BlockPos> getPosList(Color4f color4f){
-        return highlightMap.get(color4f);
+    public static Set<BlockPos> getHighlightBlockPosList(String id){
+        if(highlightTheProjectMap.get(id) != null){
+            return highlightTheProjectMap.get(id).pos();
+        }
+        return null;
+    }
+    public static List<String> clearList = new LinkedList<>();
+    public static void clear(String id){
+        if (!clearList.contains(id)) clearList.add(id);
+    }
+    public static Map<String,Set<BlockPos>> setMap = new HashMap<>();
+    public static void setPos(String id,Set<BlockPos> posSet){
+        HighlightTheProject highlightTheProject = highlightTheProjectMap.get(id);
+        if (highlightTheProject != null && posSet != null) {
+            setMap.put(id,posSet);
+        }
     }
     public void highlightBlock(Color4f color4f, BlockPos pos) {
         BlockState blockState = client.world.getBlockState(pos);
@@ -53,36 +72,77 @@ public class HighlightBlockRenderer implements IRenderer {
 
         GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
         GL11.glPolygonOffset(-1.0F, -1.0F);
+        //#if MC > 12006
+        BuiltBuffer meshData;
+        //#endif
+        RenderSystem.depthMask(false);
         RenderSystem.enableBlend();
         RenderSystem.disableCull();
         RenderSystem.setShader(GameRenderer::getPositionColorProgram);
 //        RenderSystem.setShader(GameRenderer::getPositionColorShader);
         Tessellator instance = Tessellator.getInstance();
-        BufferBuilder buffer = instance.getBuffer();
+        //#if MC > 12006
+        BufferBuilder buffer = instance.begin(VertexFormat.DrawMode.QUADS,VertexFormats.POSITION_COLOR);
+        //#else
+        //$$ BufferBuilder buffer = instance.getBuffer();
+        //#endif
 
-        if (!buffer.isBuilding()) buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        //#if MC > 12006
         voxelShape.forEachBox((minX, minY, minZ, maxX, maxY, maxZ) ->
                 RenderUtils.drawBoxAllSidesBatchedQuads(
-                        minX + x,
-                        minY + y,
-                        minZ + z,
-                        maxX + x,
-                        maxY + y,
-                        maxZ + z,
+                        (float)(minX + x),
+                        (float)(minY + y),
+                        (float)(minZ + z),
+                        (float)(maxX + x),
+                        (float)(maxY + y),
+                        (float)(maxZ + z),
                         color4f, buffer));
+        //#else
+        //$$ if (!buffer.isBuilding()) buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+        //$$ voxelShape.forEachBox((minX, minY, minZ, maxX, maxY, maxZ) ->
+        //$$         RenderUtils.drawBoxAllSidesBatchedQuads(
+        //$$                 minX + x,
+        //$$                 minY + y,
+        //$$                 minZ + z,
+        //$$                 maxX + x,
+        //$$                 maxY + y,
+        //$$                 maxZ + z,
+        //$$                 color4f, buffer));
+        //#endif
 
-        instance.draw();
+
+
+
+        //#if MC > 12006
+        try
+        {
+            meshData = buffer.end();
+            BufferRenderer.drawWithGlobalProgram(meshData);
+            meshData.close();
+        }
+        catch (Exception e)
+        {
+            Litematica.logger.error("renderSchematicMismatches: Failed to draw Schematic Mismatches (Step 2) (Error: {})", e.getLocalizedMessage());
+        }
+
         RenderSystem.enableCull();
-        RenderSystem.disableBlend();
+        RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
+        //#else
+        //$$ instance.draw();
+        //$$ RenderSystem.enableCull();
+        //$$ RenderSystem.disableBlend();
+        //$$ RenderSystem.enableDepthTest();
+        //#endif
+
         GL11.glDisable(GL11.GL_POLYGON_OFFSET_FILL);
     }
-    public void test3(MatrixStack matrices){
-
-        BlockPos pos1 = client.player.getBlockPos().up(-1);
-        BlockPos pos2 = client.player.getBlockPos().up(-2);
-        fi.dy.masa.litematica.render.RenderUtils.renderAreaSides(pos1, pos1, new Color4f(1,1,0,0.5F), matrices, client);
-    }
+//    public void test3(MatrixStack matrices){
+//
+//        BlockPos pos1 = client.player.getBlockPos().up(-1);
+//        BlockPos pos2 = client.player.getBlockPos().up(-2);
+//        fi.dy.masa.litematica.render.RenderUtils.renderAreaSides(pos1, pos1, new Color4f(1,1,0,0.5F), matrices, client);
+//    }
 
     //如果不注册无法渲染，
     public static void init(){
@@ -90,12 +150,39 @@ public class HighlightBlockRenderer implements IRenderer {
     }
 
     @Override
-    public void onRenderWorldLast(MatrixStack matrices, Matrix4f projMatrix){
-        for (Map.Entry<Color4f, List<BlockPos>> map : highlightMap.entrySet()) {
-            Color4f key = map.getKey();
-            for (BlockPos blockPos : map.getValue()) {
-                instance.highlightBlock(key,blockPos);
+    //#if MC > 12004
+    public void onRenderWorldLast(Matrix4f matrices, Matrix4f projMatrix){
+    //#else
+    //$$ public void onRenderWorldLast(MatrixStack matrices, Matrix4f projMatrix){
+    //#endif
+        shaderIng = true;
+        for (Map.Entry<String, HighlightTheProject> stringHighlightTheProjectEntry : highlightTheProjectMap.entrySet()) {
+            String key = stringHighlightTheProjectEntry.getKey();
+            HighlightTheProject value = stringHighlightTheProjectEntry.getValue();
+
+            setMap.forEach((k,v) -> {
+                if (key.equals(k)) {
+                    value.pos.clear();
+                    value.pos.addAll(v);
+                }
+            });
+            setMap.clear();
+
+            Set<BlockPos> pos = value.pos;
+            Color4f color = value.color4f.getColor();
+
+            for (BlockPos p : pos) {
+                if (searchBlockId.equals(key) && SEARCH_BLOCK_LIMIT.getBooleanValue() && !DataManager.getRenderLayerRange().isPositionWithinRange(p)) continue;
+                instance.highlightBlock(color,p);
             }
+            for (String s : clearList) {
+                if (key.equals(s)) {
+                    value.pos.clear();
+                    clearList.remove(s);
+                }
+            }
+            clearList.clear();
         }
+        shaderIng = false;
     }
 }

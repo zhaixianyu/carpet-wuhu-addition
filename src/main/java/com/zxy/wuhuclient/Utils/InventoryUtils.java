@@ -4,18 +4,31 @@ import com.zxy.wuhuclient.mixin.masa.Litematica_InventoryUtilsMixin;
 import fi.dy.masa.litematica.config.Configs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.Set;
+//#if MC > 12006
+import net.minecraft.component.type.ItemEnchantmentsComponent;
+//#else
+//$$ import net.minecraft.enchantment.EnchantmentHelper;
+//$$ import net.minecraft.enchantment.Enchantments;
+//#endif
 
 import static com.zxy.wuhuclient.Utils.SwitchItem.reSwitchItem;
 import static com.zxy.wuhuclient.config.Configs.QUICK_SHULKER;
@@ -123,5 +136,63 @@ public class InventoryUtils {
                 return;
             }
         }
+    }
+
+    public static boolean equalsItem(ItemStack itemStack1,ItemStack itemStack2){
+        //#if MC > 12004
+        return ItemStack.areItemsAndComponentsEqual(itemStack1, itemStack2);
+        //#else
+        //$$ return ItemStack.canCombine(itemStack1, itemStack2);
+        //#endif
+    }
+
+    public static int getEnchantmentLevel(ItemStack itemStack,
+                                         //#if MC > 12006
+                                         RegistryKey<Enchantment> enchantment
+                                         //#else
+                                         //$$ Enchantment enchantment
+                                         //#endif
+    ){
+        //#if MC > 12006
+        ItemEnchantmentsComponent enchantments = itemStack.getEnchantments();
+
+        if (enchantments.equals(ItemEnchantmentsComponent.DEFAULT)) return -1;
+        Set<RegistryEntry<Enchantment>> enchantmentsEnchantments = enchantments.getEnchantments();
+        for (RegistryEntry<Enchantment> entry : enchantmentsEnchantments) {
+            if (entry.matchesKey(enchantment)) {
+                return enchantments.getLevel(entry);
+            }
+        }
+        //#else
+        //$$ EnchantmentHelper.getLevel(Enchantments.MENDING,itemStack);
+        //#endif
+        return -1;
+    }
+
+    public static boolean isInventory(BlockPos pos) {
+//        if (client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK) {
+//            BlockPos pos = ((BlockHitResult) client.crosshairTarget).getBlockPos();
+        if (client.world == null) return false;
+        Inventory inventory = fi.dy.masa.malilib.util.InventoryUtils.getInventory(client.world, pos);
+
+        return inventory != null;
+//        BlockState blockState = client.world.getBlockState(pos);
+//        BlockEntity blockEntity = client.world.getBlockEntity(pos);
+//        try {
+//            if (((BlockWithEntityMixin) blockState.getBlock()).createScreenHandlerFactory(blockState, client.world, pos) == null ||
+//                    (blockEntity instanceof ShulkerBoxBlockEntity entity &&
+//                            //#if MC > 12004
+//                            !client.world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(0.0f,blockState.get(FACING),  0.5f).offset(pos).contract(1.0E-6)) &&
+//                            //#else
+//                            //$$ !client.world.isSpaceEmpty(ShulkerEntity.calculateBoundingBox(blockState.get(FACING), 0.0f, 0.5f).offset(pos).contract(1.0E-6)) &&
+//                            //#endif
+//                            entity.getAnimationStage() == ShulkerBoxBlockEntity.AnimationStage.CLOSED)) {
+//                client.inGameHud.setOverlayMessage(Text.of("目标无法打开"), false);
+//                return false;
+//            }
+//        } catch (Exception e) {
+//            return false;
+//        }
+//        return true;
     }
 }

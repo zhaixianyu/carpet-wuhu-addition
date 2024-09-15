@@ -2,7 +2,7 @@ package com.zxy.wuhuclient.mixin;
 
 import com.zxy.wuhuclient.Utils.InventoryUtils;
 import com.zxy.wuhuclient.Utils.ZxyUtils;
-import com.zxy.wuhuclient.featuresList.AutoMending;
+import com.zxy.wuhuclient.features_list.AutoMending;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Final;

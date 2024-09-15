@@ -1,25 +1,33 @@
 {
   "required": true,
   "package": "com.zxy.wuhuclient.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
   "mixins": [
-
+    "masa.WorldUtilsAccessor",
+    "masa.litematicahelper.MaterialListHudRendererAccessor",
+    "masa.litematicahelper.ScreenHandlerMixin",
+    "masa.litematicahelper.TaskCountBlocksPlacementMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
     "BlockMixin",
-    "CraftingScreenHandlerMixin",
+    "ClientChunkManagerMixin",
     "ClientPlayerEMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "CraftingScreenHandlerMixin",
     "MinecraftClientMixin",
     "MixinExperienceOrbEntity",
     "SuffixArrayMixin",
     "masa.Litematica_InventoryUtilsMixin",
     "masa.MixinInventoryUtils",
-    "masa.WidgetListBaseMixin",
-    "masa.WidgetListConfigOptionsMixin"
+    "masa.litematica_easy_place_fix.ClientPlayerInteractionManagerMixin_EasyPlaceFix",
+    "masa.litematica_easy_place_fix.WorldUtilsMixin",
+    "masa.litematicahelper.SelectionManagerMixin",
+    "masa.litematicahelper.TaskCountBlocksAreaMixin",
+    "masa.pinyin.WidgetListBaseMixin",
+    "masa.pinyin.WidgetListConfigOptionsMixin"
   ]
 }

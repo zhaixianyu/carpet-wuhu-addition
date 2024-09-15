@@ -35,9 +35,51 @@ repositories {
 		}
 	}
 
-	maven{
-		url = "https://maven.pkg.github.com/JackFred2/WhereIsIt"
+//	maven{
+//		url = "https://maven.pkg.github.com/JackFred2/WhereIsIt"
+//	}
+	maven {
+		url 'https://jitpack.io'
 	}
+	maven {
+		name = "BlameJared"
+		url = uri("https://maven.blamejared.com")
+		content {
+			includeGroupAndSubgroups("com.blamejared.searchables")
+		}
+	}
+	maven {
+		name = "jackfredReleases"
+		url = "https://maven.jackf.red/releases"
+		content {
+			includeGroupAndSubgroups("red.jackf")
+		}
+	}
+
+	// YACL
+	maven {
+		name = "Xander Maven"
+		url = uri("https://maven.isxander.dev/releases")
+		content {
+			includeGroupAndSubgroups("dev.isxander")
+			includeGroupAndSubgroups("org.quiltmc")
+		}
+	}
+
+	// YACL Snapshots
+	maven {
+		name = "Xander Snapshot Maven"
+		url = uri("https://maven.isxander.dev/snapshots")
+		content {
+			includeGroupAndSubgroups("dev.isxander")
+			includeGroupAndSubgroups("org.quiltmc")
+		}
+	}
+	maven {
+		name = "CottonMC"
+		url = "https://server.bbkr.space/artifactory/libs-release"
+	}
+	maven { url = "https://maven.shedaniel.me/" }
 
 //	maven { url = "https://mvnrepository.com/artifact/com.github.open-android/pinyin4j " }
 	// Add repositories to retrieve artifacts from in here.
@@ -62,16 +104,29 @@ configurations {
 	register("productionRuntimeMods")
 }
 
-// Module, Property prefix, Resolve condition, Transitive dependencies.
+	def sakura = mcVersion > 12006
+	def jitpack = mcVersion >= 120060
+//  1 = modImplementation 2 = modImplementation include 	3 = modApi	4 = modCompileOnly
+// Module, Property prefix, Resolve condition, Transitive depende ncies.
 def mod_dependencies = [
-		["fi.dy.masa.malilib:${project.malilib_version}"     						, true],
-		["curse.maven:item-scroller-242064:${project.item_scrolle_version}"  		, true],
-		["curse.maven:litematica-308892:${project.litematica_version}"     			, true],
-		["curse.maven:quick-shulker-362669:${project.quick_shulker_version}" 	    , true],
-		["net.kyrptonaught:kyrptconfig:${project.kyrptconfig_version}"     			, true],
-		["net.kyrptonaught:shulkerutils:${project.shulkerutils_version}"     	   	, true],
-		["com.terraformersmc:modmenu:${project.modmenu_version}"     				, true],
-		["maven.modrinth:carpet:${project.carpet_version}"     						, true],
+		[(sakura ? "com.github.sakura-ryoko:malilib" : "fi.dy.masa.malilib"						)+":${project.malilib_version}"     		, 1],
+		[(sakura ? "com.github.sakura-ryoko:itemscroller" : "curse.maven:item-scroller-242064"	)+":${project.item_scrolle_version}"  		, 1],
+		[(sakura ? "com.github.sakura-ryoko:litematica" : "curse.maven:litematica-308892"		)+":${project.litematica_version}"     		, 1],
+		[(jitpack ? "com.github.Haocen2004:quickshulker" :"curse.maven:quick-shulker-362669"	)+":${project.quick_shulker_version}" 	  	, mcVersion >= 12006 ? 4 : 1],
+		["net.kyrptonaught:kyrptconfig:${project.kyrptconfig_version}"     																	, mcVersion >= 12006 ? 4 : 1],
+		["net.kyrptonaught:shulkerutils:${project.shulkerutils_version}"     												   				, mcVersion >= 12006 ? 4 : 1],
+		["com.terraformersmc:modmenu:${project.modmenu_version}"     																		, 1],
+		[(mcVersion >= 12006 ? "curse.maven:carpet-349239" :"maven.modrinth:carpet")+":${project.carpet_version}"     						, 1],
+
+		["com.blamejared.searchables"                           											+ ":${project.searchables}",        mcVersion >= 12001 ? 1 : 0],
+		["maven.modrinth:yacl"                                  											+ ":${project.yacl}",               mcVersion >= 12001 ? 1 : 0],
+//        ["maven.modrinth:yacl"                                  ":${project.}, "yacl",               mcVersion >= 12001 ? 1 : 0],
+//        ["maven.modrinth:yacl"                                  ":${project.}, "yacl",               mcVersion > 12001 ? 1 : 0],
+		[(mcVersion >= 12001 ? "red.jackf:chesttracker" : "maven.modrinth:chest-tracker")                   + ":${project.chesttracker}",       1],
+		[(mcVersion >= 12001 ? "red.jackf:whereisit" : "maven.modrinth:where-is-it")                        + ":${project.whereisit}",          1],
+		["maven.modrinth:cloth-config"                          											+ ":${project.cloth_config}",       mcVersion < 12001 ? 1 : 0],
+		["me.shedaniel.cloth.api:cloth-api"                     											+ ":${project.cloth_api}",          mcVersion < 11904 ? 1 : 0],
+		["io.github.cottonmc:LibGui"                            											+ ":${project.LibGui}",             mcVersion < 12001 ? 1 : 0],
 ]
 
 
@@ -83,6 +138,7 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
+	implementation 'com.github.jitpack:gradle-simple:1.0'
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 //	modImplementation "com.zxy:litematica_printer:1.20.2-2.4+20240218"
@@ -107,12 +163,18 @@ dependencies {
 
 	mod_dependencies.forEach {item ->
 		def dependencyNotation = item[0]
-		def activatedInRuntime = item[1]
-		if (activatedInRuntime) {
-			modImplementation dependencyNotation
-		}
-		else {
-			modCompileOnly dependencyNotation
+		def mode = item[1]
+		def idFix= ""
+//		if(mode != 0) idFix = "${dependencyNotation}:${project.property("${id}")}"
+		if(mode != 0) idFix = dependencyNotation
+		if (mode == 1) {
+			modImplementation idFix
+		} else if (mode == 2) {
+			modImplementation include(idFix)
+		} else if (mode == 3) {
+			modApi idFix
+		} else if (mode == 4) {
+			modCompileOnly idFix
 		}
 	}
 //	modImplementation "maven.modrinth:jei:${project.jei}"
@@ -289,6 +351,49 @@ remapJar {
 }
 
 
+
+
+def MIXIN_CONFIG_PATHS = ['wuhuclient.mixins.json']
+JavaVersion JAVA_COMPATIBILITY
+if (mcVersion >= 12005) {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_21
+} else if (mcVersion >= 11800) {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_17
+} else if (mcVersion >= 11700) {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_16
+} else {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
+}
+JavaVersion MIXIN_COMPATIBILITY_LEVEL = JAVA_COMPATIBILITY
+
+tasks.withType(JavaCompile).configureEach {
+	if(mcVersion >= 12005){
+		it.options.release = 21
+	}else if(mcVersion >=11800){
+		it.options.release = 17
+	}else if(mcVersion >=11700){
+		it.options.release = 16
+	}else{
+		it.options.release = 8
+	}
+
+}
+
+java {
+
+	sourceCompatibility = JAVA_COMPATIBILITY
+	targetCompatibility = JAVA_COMPATIBILITY
+
+	withSourcesJar()
+}
+
+//jar {
+////	from("${rootDir}/LICENSE")
+//	from("LICENSE") {
+//		rename { "${it}_${project.archivesBaseName}"}
+//	}
+//}
+
 processResources {
 	outputs.upToDateWhen { false }
 
@@ -316,30 +421,13 @@ processResources {
 				"mod_version"         : project.version
 		])
 	}
-}
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 17
-}
-
-java {
-	if (mcVersion > 11701) {
-		sourceCompatibility(JavaVersion.VERSION_16)
-		targetCompatibility(JavaVersion.VERSION_16)
-	} else {
-		sourceCompatibility(JavaVersion.VERSION_1_8)
-		targetCompatibility(JavaVersion.VERSION_1_8)
+	MIXIN_CONFIG_PATHS.each {mixinConfigPath ->
+		filesMatching(mixinConfigPath) {
+			filter { s -> s.replace('{{COMPATIBILITY_LEVEL}}', "JAVA_${MIXIN_COMPATIBILITY_LEVEL.ordinal() + 1}") }
+		}
 	}
-
-	withSourcesJar()
 }
-
-//jar {
-////	from("${rootDir}/LICENSE")
-//	from("LICENSE") {
-//		rename { "${it}_${project.archivesBaseName}"}
-//	}
-//}
 
 // configure the maven publication
 publishing {

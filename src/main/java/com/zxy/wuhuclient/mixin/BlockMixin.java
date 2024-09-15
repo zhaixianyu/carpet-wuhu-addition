@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import static com.zxy.wuhuclient.Utils.ScreenManagement.closeScreen;
-import static com.zxy.wuhuclient.featuresList.Synthesis.*;
+import static com.zxy.wuhuclient.features_list.Synthesis.*;
 
 @Mixin(Block.class)
 public class BlockMixin {

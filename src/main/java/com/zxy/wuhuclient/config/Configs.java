@@ -7,16 +7,14 @@ import fi.dy.masa.malilib.config.ConfigUtils;
 import fi.dy.masa.malilib.config.IConfigBase;
 import fi.dy.masa.malilib.config.IConfigHandler;
 import fi.dy.masa.malilib.config.IHotkeyTogglable;
-import fi.dy.masa.malilib.config.options.ConfigBoolean;
-import fi.dy.masa.malilib.config.options.ConfigBooleanHotkeyed;
-import fi.dy.masa.malilib.config.options.ConfigColor;
-import fi.dy.masa.malilib.config.options.ConfigHotkey;
+import fi.dy.masa.malilib.config.options.*;
 import fi.dy.masa.malilib.util.JsonUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.zxy.wuhuclient.Utils.ZxyUtils.isLoadChestTracker;
 import static com.zxy.wuhuclient.Utils.ZxyUtils.isLoadQuiShulker;
 import static com.zxy.wuhuclient.WuHuClientMod.MOD_ID;
 
@@ -34,15 +32,24 @@ public class Configs implements IConfigHandler {
     public static final ConfigBooleanHotkeyed SYNC_INVENTORY_CHECK = new ConfigBooleanHotkeyed( "容器同步是否检查背包",true,"","开启时会检测背包中的物品是否满足填充条件，物品不足时不会打开容器。");
     public static final ConfigBooleanHotkeyed AUTO_MENDING = new ConfigBooleanHotkeyed( "自动经验修补", false, "","在获取经验的时候可以将背包中带有经验修补且未满耐久的物品放到副手，"+"\n" +
             "修补完成后或一段时间未获得经验后放回原位。如果经验不是持续获得 可能不稳定");
+    public static final ConfigHotkey SEARCH_BLOCK = new ConfigHotkey( "搜索选取内指定方块", "","按下后将列表中的方块高亮，再次按下取消高亮");
+    public static final ConfigBoolean SEARCH_BLOCK_LIMIT = new ConfigBoolean( "搜索方块渲染层数限制", false,"是否受到投影渲染层数限制影响");
+    public static final ConfigStringList SEARCH_BLOCK_LIST = new ConfigStringList( "搜索方块列表",ImmutableList.of() ,"输入 \"-a\" 后缀会被识别为全称");
+    public static final ConfigBooleanHotkeyed LITEMATICA_HELPER = new ConfigBooleanHotkeyed("投影材料助手",false,"","开启后将允许选中投影方块，会根据框选的投影拿取对应材料\n"+"取物品功能来自 Fallen_Breath的TweakerMore");
+    public static final ConfigBoolean LITEMATICA_HELPER_TIPS = new ConfigBoolean("投影材料助手提示",true,"","交互容器后的存放提示");
+
 
     //兼容
     public static final ConfigBoolean PINYIN = new ConfigBoolean( "拼音搜索",true,"拼音，首字母简拼搜索 支持masa系列和创造搜索栏");
+    public static final ConfigBoolean EASY_PLACED_FIX = new ConfigBoolean( "轻松放置修复",true,"修复轻松放置多放置方块的bug\n此功能来自 Earthcomputer");
     public static final ConfigBooleanHotkeyed QUICK_SHULKER = new ConfigBooleanHotkeyed( "快捷盒子支持", false, "","需要服务端有快捷盒子mod，否则会出现无法打开UI的情况\n" +
             "中键投影或轻松放置可以从濳影盒中直接取出物品(需要背包中有空位)");
 //    public static final ConfigBooleanHotkeyed REMOTE_INVENTORY = new ConfigBooleanHotkeyed( "远程库存", false, "","需要服务端有远程库存mod，否则会出现无法打开UI的情况\n");
 
     //color
     public static final ConfigColor SYNC_INVENTORY_COLOR = new ConfigColor("容器同步高亮颜色","#4CFF4CE6","");
+    public static final ConfigColor SEARCH_BLOCK_COLOR = new ConfigColor("搜索方块高亮颜色","#4CFFB912","");
+    public static final ConfigColor LITEMATICA_HELPER_COLOR = new ConfigColor("投影材料助手高亮颜色","4CFF4CE6","");
 
     public static final ImmutableList<IConfigBase> COMPATIBILITY = addCompatibility();
     public static ImmutableList<IConfigBase> addCompatibility(){
@@ -51,6 +58,7 @@ public class Configs implements IConfigHandler {
         if(isLoadQuiShulker) list.add(QUICK_SHULKER);
 //        list.add(REMOTE_INVENTORY);
         list.add(PINYIN);
+        list.add(EASY_PLACED_FIX);
 
         return ImmutableList.copyOf(list);
     }
@@ -61,6 +69,11 @@ public class Configs implements IConfigHandler {
         list.add(AUTO_MENDING);
         list.add(SYNC_INVENTORY);
         list.add(SYNC_INVENTORY_CHECK);
+        list.add(SEARCH_BLOCK);
+        list.add(SEARCH_BLOCK_LIMIT);
+        list.add(SEARCH_BLOCK_LIST);
+        list.add(LITEMATICA_HELPER);
+        list.add(LITEMATICA_HELPER_TIPS);
         list.add(TEST);
 
         return ImmutableList.copyOf(list);
@@ -70,20 +83,23 @@ public class Configs implements IConfigHandler {
     public static ImmutableList<IConfigBase> addColor(){
         List<IConfigBase> list = new ArrayList<>();
         list.add(SYNC_INVENTORY_COLOR);
-
+        list.add(SEARCH_BLOCK_COLOR);
+        if(isLoadChestTracker) list.add(LITEMATICA_HELPER_COLOR);
         return ImmutableList.copyOf(list);
     }
 
     //按下时激活
     public static final ImmutableList<ConfigHotkey> KEY_LIST = ImmutableList.of(
             WUHU_CLIENT,
-            SYNC_INVENTORY
+            SYNC_INVENTORY,
+            SEARCH_BLOCK
     );
     //切换型开关
     public static final ImmutableList<IHotkeyTogglable> SWITCH_KEY = ImmutableList.of(
             SYNTHESIS,
             QUICK_SHULKER,
             SYNC_INVENTORY_CHECK,
+            LITEMATICA_HELPER,
 //            AUTO_STORAGE,
             TEST
     );
