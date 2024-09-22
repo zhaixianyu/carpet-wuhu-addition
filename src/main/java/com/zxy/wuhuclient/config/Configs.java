@@ -35,7 +35,7 @@ public class Configs implements IConfigHandler {
     public static final ConfigHotkey SEARCH_BLOCK = new ConfigHotkey( "搜索选取内指定方块", "","按下后将列表中的方块高亮，再次按下取消高亮");
     public static final ConfigBoolean SEARCH_BLOCK_LIMIT = new ConfigBoolean( "搜索方块渲染层数限制", false,"是否受到投影渲染层数限制影响");
     public static final ConfigStringList SEARCH_BLOCK_LIST = new ConfigStringList( "搜索方块列表",ImmutableList.of() ,"输入 \"-a\" 后缀会被识别为全称");
-    public static final ConfigBooleanHotkeyed LITEMATICA_HELPER = new ConfigBooleanHotkeyed("投影材料助手",false,"","开启后将允许选中投影方块，会根据框选的投影拿取对应材料\n"+"取物品功能来自 Fallen_Breath的TweakerMore");
+    public static final ConfigBooleanHotkeyed LITEMATICA_HELPER = new ConfigBooleanHotkeyed("投影材料助手",false,"","开启后将允许选中投影方块，会根据框选的投影更新材料列表。打开容器自动拿取对应材料\n"+"取物品功能来自 Fallen_Breath的TweakerMore");
     public static final ConfigBoolean LITEMATICA_HELPER_TIPS = new ConfigBoolean("投影材料助手提示",true,"","交互容器后的存放提示");
 
 
@@ -49,7 +49,7 @@ public class Configs implements IConfigHandler {
     //color
     public static final ConfigColor SYNC_INVENTORY_COLOR = new ConfigColor("容器同步高亮颜色","#4CFF4CE6","");
     public static final ConfigColor SEARCH_BLOCK_COLOR = new ConfigColor("搜索方块高亮颜色","#4CFFB912","");
-    public static final ConfigColor LITEMATICA_HELPER_COLOR = new ConfigColor("投影材料助手高亮颜色","4CFF4CE6","");
+    public static final ConfigColor LITEMATICA_HELPER_COLOR = new ConfigColor("投影材料助手高亮颜色","#4C6272E9","");
 
     public static final ImmutableList<IConfigBase> COMPATIBILITY = addCompatibility();
     public static ImmutableList<IConfigBase> addCompatibility(){
@@ -74,7 +74,7 @@ public class Configs implements IConfigHandler {
         list.add(SEARCH_BLOCK_LIST);
         list.add(LITEMATICA_HELPER);
         list.add(LITEMATICA_HELPER_TIPS);
-        list.add(TEST);
+//        list.add(TEST);
 
         return ImmutableList.copyOf(list);
     }

@@ -183,7 +183,7 @@ public class ZxyUtils {
                 try {
                     searchBlockIng = true;
                     searchBlock();
-                    LitematicaHelper.instance.highlightInventoryBlock();
+                    if(isLoadChestTracker) LitematicaHelper.instance.highlightInventoryBlock();
                 }finally {
                     searchBlockIng = false;
                 }

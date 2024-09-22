@@ -32,7 +32,8 @@ import red.jackf.chesttracker.impl.memory.MemoryBankImpl;
 import red.jackf.whereisit.api.SearchRequest;
 import red.jackf.whereisit.client.api.events.SearchRequestPopulator;
 //#else
-//$$
+//$$ import red.jackf.chesttracker.memory.Memory;
+//$$ import red.jackf.chesttracker.memory.MemoryDatabase;
 //#endif
 
 import java.util.*;
@@ -101,9 +102,9 @@ public class LitematicaHelper {
                     String missingColor = missing == 0 ? GuiBase.TXT_GREEN : GuiBase.TXT_GOLD;
                     String stackName = stack.getRarity().
                             //#if MC > 12004
-                            //$$ getFormatting()
+                            getFormatting()
                             //#else
-                            formatting
+                            //$$ formatting
                             //#endif
                             + stack.getName().getString() + GuiBase.TXT_RST;
 
@@ -181,24 +182,34 @@ public class LitematicaHelper {
         MaterialListBase materialList = DataManager.getMaterialList();
         if (materialList == null) return;
         MaterialListUtils.updateAvailableCounts(materialList.getMaterialsAll(), player);
-        List<MaterialListEntry> materialsMissingOnly = materialList.getMaterialsMissingOnly(true);
+        List<MaterialListEntry> materialsMissingOnly = materialList.getMaterialsMissingOnly(false);
+        List<BlockPos> list = new ArrayList<>();
         for (MaterialListEntry materialListEntry : materialsMissingOnly) {
             ItemStack stack = materialListEntry.getStack();
-
+            list.addAll(searchChestTrackerMemory(stack));
         }
+        if (list.isEmpty()){
+            HighlightBlockRenderer.clear(litematicaHelper);
+            return;
+        }
+        HighlightBlockRenderer.setPos(litematicaHelper,new HashSet<>(list.stream().distinct().toList()));
     }
 
     public List<BlockPos> searchChestTrackerMemory(ItemStack itemStack){
         List<BlockPos> blockPos = new ArrayList<>();
-        //#if MC > 11904
         ClientWorld world = client.world;
         if (world == null) return blockPos;
-        Identifier registry = world.getRegistryKey().getRegistry();
+        Identifier registry = world.getRegistryKey().getValue();
+        //#if MC > 11904
         Map<BlockPos, Memory> blockPosMemoryMap = memoriesSearch(registry, itemStack, MemoryBankAccessImpl.INSTANCE.getLoadedInternal().orElse(null));
+        if (blockPosMemoryMap == null) return blockPos;
         blockPos.addAll(blockPosMemoryMap.keySet());
 
         //#else
-        //$$
+        //$$ MemoryDatabase database = MemoryDatabase.getCurrent();
+        //$$ if (database == null) return blockPos;
+        //$$ List<BlockPos> list = database.findItems(itemStack, registry).stream().map(Memory::getPosition).distinct().toList();
+        //$$ blockPos.addAll(list);
         //#endif
         return blockPos;
     }

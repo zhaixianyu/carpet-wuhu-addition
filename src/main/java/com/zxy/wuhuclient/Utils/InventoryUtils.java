@@ -24,10 +24,10 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 //#if MC > 12006
-//$$ import net.minecraft.component.type.ItemEnchantmentsComponent;
+import net.minecraft.component.type.ItemEnchantmentsComponent;
 //#else
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
+//$$ import net.minecraft.enchantment.EnchantmentHelper;
+//$$ import net.minecraft.enchantment.Enchantments;
 //#endif
 
 import static com.zxy.wuhuclient.Utils.SwitchItem.reSwitchItem;
@@ -140,31 +140,31 @@ public class InventoryUtils {
 
     public static boolean equalsItem(ItemStack itemStack1,ItemStack itemStack2){
         //#if MC > 12004
-        //$$ return ItemStack.areItemsAndComponentsEqual(itemStack1, itemStack2);
+        return ItemStack.areItemsAndComponentsEqual(itemStack1, itemStack2);
         //#else
-        return ItemStack.canCombine(itemStack1, itemStack2);
+        //$$ return ItemStack.canCombine(itemStack1, itemStack2);
         //#endif
     }
 
     public static int getEnchantmentLevel(ItemStack itemStack,
                                          //#if MC > 12006
-                                         //$$ RegistryKey<Enchantment> enchantment
+                                         RegistryKey<Enchantment> enchantment
                                          //#else
-                                         Enchantment enchantment
+                                         //$$ Enchantment enchantment
                                          //#endif
     ){
         //#if MC > 12006
-        //$$ ItemEnchantmentsComponent enchantments = itemStack.getEnchantments();
-        //$$
-        //$$ if (enchantments.equals(ItemEnchantmentsComponent.DEFAULT)) return -1;
-        //$$ Set<RegistryEntry<Enchantment>> enchantmentsEnchantments = enchantments.getEnchantments();
-        //$$ for (RegistryEntry<Enchantment> entry : enchantmentsEnchantments) {
-        //$$     if (entry.matchesKey(enchantment)) {
-        //$$         return enchantments.getLevel(entry);
-        //$$     }
-        //$$ }
+        ItemEnchantmentsComponent enchantments = itemStack.getEnchantments();
+
+        if (enchantments.equals(ItemEnchantmentsComponent.DEFAULT)) return -1;
+        Set<RegistryEntry<Enchantment>> enchantmentsEnchantments = enchantments.getEnchantments();
+        for (RegistryEntry<Enchantment> entry : enchantmentsEnchantments) {
+            if (entry.matchesKey(enchantment)) {
+                return enchantments.getLevel(entry);
+            }
+        }
         //#else
-        EnchantmentHelper.getLevel(Enchantments.MENDING,itemStack);
+        //$$ EnchantmentHelper.getLevel(Enchantments.MENDING,itemStack);
         //#endif
         return -1;
     }
