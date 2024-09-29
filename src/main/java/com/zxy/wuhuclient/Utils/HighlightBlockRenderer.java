@@ -1,6 +1,7 @@
 package com.zxy.wuhuclient.Utils;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.zxy.wuhuclient.features_list.litematica_helper.LitematicaHelper;
 import fi.dy.masa.litematica.Litematica;
 import fi.dy.masa.litematica.data.DataManager;
 import fi.dy.masa.malilib.config.options.ConfigColor;
@@ -25,6 +26,7 @@ import java.util.*;
 
 import static com.zxy.wuhuclient.Utils.ZxyUtils.searchBlockId;
 import static com.zxy.wuhuclient.WuHuClientMod.client;
+import static com.zxy.wuhuclient.config.Configs.LITEMATICA_HELPER;
 import static com.zxy.wuhuclient.config.Configs.SEARCH_BLOCK_LIMIT;
 
 public class HighlightBlockRenderer implements IRenderer {
@@ -159,6 +161,7 @@ public class HighlightBlockRenderer implements IRenderer {
         for (Map.Entry<String, HighlightTheProject> stringHighlightTheProjectEntry : highlightTheProjectMap.entrySet()) {
             String key = stringHighlightTheProjectEntry.getKey();
             HighlightTheProject value = stringHighlightTheProjectEntry.getValue();
+            if(!LITEMATICA_HELPER.getBooleanValue() && LitematicaHelper.instance.litematicaHelper.equals(key)) continue;
 
             setMap.forEach((k,v) -> {
                 if (key.equals(k)) {

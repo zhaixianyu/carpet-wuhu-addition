@@ -24,6 +24,8 @@ public class HotkeysCallback implements IHotkeyCallback {
             startSearchBlock();
         }else if(key == SYNC_INVENTORY.getKeybind()){
             SyncInventory.startOrOffSyncInventory();
+        }else if(key == ADD_INVENTORY.getKeybind()){
+
         }
         return false;
     }

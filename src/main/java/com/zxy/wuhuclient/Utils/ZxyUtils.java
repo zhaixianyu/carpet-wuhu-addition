@@ -114,6 +114,7 @@ public class ZxyUtils {
             this.worldSchematic = worldSchematic;
         }
     }
+
     public static LinkedList<BlockPos> siftBlock(String blockName) {
         LinkedList<BlockPos> blocks = new LinkedList<>();
         AreaSelection i = DataManager.getSelectionManager().getCurrentSelection();
@@ -132,15 +133,21 @@ public class ZxyUtils {
                         }
                         Block block = state.getBlock();
                         String string = Registries.BLOCK.getId(block).toString();
-                        String fix = null;
+
                         if (blockName.length() > 2) {
-                            fix = blockName.substring(blockName.length() - 2);
-                            if ("-a".equals(fix)) {
+                            String fix = null;
+                            String[] split = blockName.split("-");
+                            fix = split[split.length-1];
+                            if ("a".equals(fix)) {
                                 String substring = blockName.substring(0, blockName.length() - 2);
                                 if (substring.equals(string)) {
                                     blocks.add(pos);
                                 }
                                 continue;
+                            }else if ("inventory".equals(fix) && InventoryUtils.isInventory(pos)){
+                                blocks.add(pos);
+                            }else if("all".equals(fix)){
+                                blocks.add(pos);
                             }
                         }
                         if (string.contains(blockName)) {
@@ -190,6 +197,7 @@ public class ZxyUtils {
             }).start();
         }
     }
+
     public static void actionBar(String message){
         MinecraftClient minecraftClient = MinecraftClient.getInstance();
         //#if MC > 11802

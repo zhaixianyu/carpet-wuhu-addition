@@ -158,9 +158,7 @@ public class SyncInventory {
                 if (!client.player.currentScreenHandler.equals(client.player.playerScreenHandler)) return;
                 DefaultedList<Slot> slots = client.player.playerScreenHandler.slots;
                 slots.forEach(slot -> itemsCount(playerItemsCount, slot.getStack()));
-//                if(targetItemsCount.keySet().stream()
-//                        .noneMatch(itemStack -> playerItemsCount.keySet().stream()
-//                                .anyMatch(itemStack1 -> ItemStack.canCombine(itemStack,itemStack1)))) return;
+
                 if (SYNC_INVENTORY_CHECK.getBooleanValue() && !targetItemsCount.entrySet().stream()
                         .allMatch(target -> playerItemsCount.entrySet().stream()
                                 .anyMatch(player ->
