@@ -1,0 +1,152 @@
+CL: net/minecraft/world/PortalForcer net/minecraft/world/dimension/PortalForcer
+CL: net/minecraft/item/TooltipAppender net/minecraft/item/tooltip/TooltipAppender
+CL: net/minecraft/block/enums/Instrument net/minecraft/block/enums/NoteBlockInstrument
+CL: net/minecraft/block/enums/Instrument$Type net/minecraft/block/enums/NoteBlockInstrument$Type
+CL: net/minecraft/client/sound/MusicType net/minecraft/sound/MusicType
+CL: net/minecraft/client/util/SmoothUtil net/minecraft/util/math/Smoother
+CL: net/minecraft/world/WorldSaveHandler net/minecraft/world/PlayerSaveHandler
+CL: net/minecraft/client/item/TooltipData net/minecraft/item/tooltip/TooltipData
+CL: net/minecraft/client/item/TooltipType net/minecraft/item/tooltip/TooltipType
+CL: net/minecraft/client/item/TooltipType$Default net/minecraft/item/tooltip/TooltipType$Default
+CL: net/minecraft/enchantment/Enchantment$Properties net/minecraft/enchantment/Enchantment$Definition
+CL: net/minecraft/client/util/ParticleUtil net/minecraft/particle/ParticleUtil
+CL: net/minecraft/component/DataComponentType net/minecraft/component/ComponentType
+CL: net/minecraft/component/DataComponentType$Builder net/minecraft/component/ComponentType$Builder
+CL: net/minecraft/component/DataComponentType$Builder$SimpleDataComponentType net/minecraft/component/ComponentType$Builder$SimpleDataComponentType
+CL: net/minecraft/client/item/BundleTooltipData net/minecraft/item/tooltip/BundleTooltipData
+CL: net/minecraft/client/particle/ParticleGroup net/minecraft/particle/ParticleGroup
+CL: net/minecraft/util/profiling/jfr/Finishable net/minecraft/util/function/Finishable
+CL: net/minecraft/client/color/world/GrassColors net/minecraft/world/biome/GrassColors
+CL: net/minecraft/client/render/BlockBreakingInfo net/minecraft/entity/player/BlockBreakingInfo
+CL: net/minecraft/client/color/world/FoliageColors net/minecraft/world/biome/FoliageColors
+CL: net/minecraft/client/world/ClientEntityManager net/minecraft/world/entity/ClientEntityManager
+CL: net/minecraft/client/world/ClientEntityManager$Listener net/minecraft/world/entity/ClientEntityManager$Listener
+CL: net/minecraft/client/render/VertexFormatElement$Type net/minecraft/client/render/VertexFormatElement$Usage
+CL: net/minecraft/client/render/VertexFormatElement$Type$SetupTask net/minecraft/client/render/VertexFormatElement$Usage$SetupTask
+CL: net/minecraft/client/render/CameraSubmersionType net/minecraft/block/enums/CameraSubmersionType
+CL: net/minecraft/datafixer/fix/ProtoChunkTickListFix$class_6741 net/minecraft/datafixer/fix/ProtoChunkTickListFix$PalettedSection
+CL: net/minecraft/client/render/entity/PlayerModelPart net/minecraft/entity/player/PlayerModelPart
+CL: net/minecraft/entity/ai/brain/task/WanderAroundTask net/minecraft/entity/ai/brain/task/MoveToTargetTask
+CL: net/minecraft/server/world/ThreadedAnvilChunkStorage net/minecraft/server/world/ServerChunkLoadingManager
+CL: net/minecraft/server/world/ThreadedAnvilChunkStorage$EntityTracker net/minecraft/server/world/ServerChunkLoadingManager$EntityTracker
+CL: net/minecraft/server/world/ThreadedAnvilChunkStorage$TicketManager net/minecraft/server/world/ServerChunkLoadingManager$TicketManager
+CL: net/minecraft/loot/function/LootingEnchantLootFunction net/minecraft/loot/function/EnchantedCountIncreaseLootFunction
+CL: net/minecraft/loot/function/LootingEnchantLootFunction$Builder net/minecraft/loot/function/EnchantedCountIncreaseLootFunction$Builder
+CL: net/minecraft/command/argument/ItemPredicateArgumentType$class_9445 net/minecraft/command/argument/ItemPredicateArgumentType$Context
+CL: net/minecraft/client/render/chunk/BlockBufferBuilderStorage net/minecraft/client/render/chunk/BlockBufferAllocatorStorage
+CL: net/minecraft/client/render/entity/feature/SkinOverlayOwner net/minecraft/entity/SkinOverlayOwner
+CL: net/minecraft/data/server/recipe/SingleItemRecipeJsonBuilder net/minecraft/data/server/recipe/StonecuttingRecipeJsonBuilder
+CL: net/minecraft/network/packet/s2c/play/UnlockRecipesS2CPacket net/minecraft/network/packet/s2c/play/ChangeUnlockedRecipesS2CPacket
+CL: net/minecraft/network/packet/s2c/play/UnlockRecipesS2CPacket$Action net/minecraft/network/packet/s2c/play/ChangeUnlockedRecipesS2CPacket$Action
+CL: net/minecraft/loot/condition/RandomChanceWithLootingLootCondition net/minecraft/loot/condition/RandomChanceWithEnchantedBonusLootCondition
+CL: net/minecraft/data/server/tag/rebalance/RebalanceStructureTagProvider net/minecraft/data/server/tag/rebalance/TradeRebalanceStructureTagProvider
+FD: net/minecraft/item/Item/ATTACK_DAMAGE_MODIFIER_ID net/minecraft/item/Item/BASE_ATTACK_DAMAGE_MODIFIER_ID
+FD: net/minecraft/item/Item/ATTACK_SPEED_MODIFIER_ID net/minecraft/item/Item/BASE_ATTACK_SPEED_MODIFIER_ID
+FD: net/minecraft/client/Mouse/controlLeftTicks net/minecraft/client/Mouse/controlLeftClicks
+FD: net/minecraft/util/DyeColor/colorComponents net/minecraft/util/DyeColor/entityColor
+FD: net/minecraft/sound/SoundEvents/BLOCK_TRIAL_SPAWNER_AMBIENT_CHARGED net/minecraft/sound/SoundEvents/BLOCK_TRIAL_SPAWNER_AMBIENT_OMINOUS
+FD: net/minecraft/sound/SoundEvents/BLOCK_TRIAL_SPAWNER_CHARGE_ACTIVATE net/minecraft/sound/SoundEvents/BLOCK_TRIAL_SPAWNER_OMINOUS_ACTIVATE
+FD: net/minecraft/client/util/Window/videoMode net/minecraft/client/util/Window/fullscreenVideoMode
+FD: net/minecraft/client/util/Window/videoModeDirty net/minecraft/client/util/Window/fullscreenVideoModeDirty
+FD: net/minecraft/entity/LivingEntity/POWDER_SNOW_SLOW_ID net/minecraft/entity/LivingEntity/POWDER_SNOW_SPEED_MODIFIER_ID
+FD: net/minecraft/entity/EquipmentSlot$Type/ARMOR net/minecraft/entity/EquipmentSlot$Type/HUMANOID_ARMOR
+FD: net/minecraft/entity/EquipmentSlot$Type/BODY net/minecraft/entity/EquipmentSlot$Type/ANIMAL_ARMOR
+FD: net/minecraft/entity/mob/ZombieEntity/BABY_SPEED_ID net/minecraft/entity/mob/ZombieEntity/BABY_SPEED_MODIFIER_ID
+FD: net/minecraft/entity/mob/ShulkerEntity/COVERED_ARMOR_BONUS_ID net/minecraft/entity/mob/ShulkerEntity/COVERED_ARMOR_MODIFIER_ID
+FD: net/minecraft/loot/context/LootContext$EntityTarget/DIRECT_KILLER net/minecraft/loot/context/LootContext$EntityTarget/DIRECT_ATTACKER
+FD: net/minecraft/loot/context/LootContext$EntityTarget/KILLER net/minecraft/loot/context/LootContext$EntityTarget/ATTACKER
+FD: net/minecraft/loot/context/LootContext$EntityTarget/KILLER_PLAYER net/minecraft/loot/context/LootContext$EntityTarget/ATTACKING_PLAYER
+FD: net/minecraft/network/ClientConnection/pendingDisconnectionReason net/minecraft/network/ClientConnection/pendingDisconnectionInfo
+FD: net/minecraft/world/SpawnDensityCapper/threadedAnvilChunkStorage net/minecraft/world/SpawnDensityCapper/chunkLoadingManager
+FD: net/minecraft/entity/mob/EndermanEntity/ATTACKING_SPEED_BOOST_ID net/minecraft/entity/mob/EndermanEntity/ATTACKING_SPEED_MODIFIER_ID
+FD: net/minecraft/block/DecoratedPotPatterns/ANGLER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/ANGLER
+FD: net/minecraft/block/DecoratedPotPatterns/ARCHER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/ARCHER
+FD: net/minecraft/block/DecoratedPotPatterns/ARMS_UP_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/ARMS_UP
+FD: net/minecraft/block/DecoratedPotPatterns/BLADE_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/BLADE
+FD: net/minecraft/block/DecoratedPotPatterns/BREWER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/BREWER
+FD: net/minecraft/block/DecoratedPotPatterns/BURN_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/BURN
+FD: net/minecraft/block/DecoratedPotPatterns/DANGER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/DANGER
+FD: net/minecraft/block/DecoratedPotPatterns/EXPLORER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/EXPLORER
+FD: net/minecraft/block/DecoratedPotPatterns/FLOW_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/FLOW
+FD: net/minecraft/block/DecoratedPotPatterns/FRIEND_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/FRIEND
+FD: net/minecraft/block/DecoratedPotPatterns/GUSTER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/GUSTER
+FD: net/minecraft/block/DecoratedPotPatterns/HEARTBREAK_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/HEARTBREAK
+FD: net/minecraft/block/DecoratedPotPatterns/HEART_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/HEART
+FD: net/minecraft/block/DecoratedPotPatterns/HOWL_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/HOWL
+FD: net/minecraft/block/DecoratedPotPatterns/MINER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/MINER
+FD: net/minecraft/block/DecoratedPotPatterns/MOURNER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/MOURNER
+FD: net/minecraft/block/DecoratedPotPatterns/PLENTY_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/PLENTY
+FD: net/minecraft/block/DecoratedPotPatterns/POTTERY_PATTERN_PRIZE_KEY net/minecraft/block/DecoratedPotPatterns/PRIZE
+FD: net/minecraft/block/DecoratedPotPatterns/SCRAPE_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/SCRAPE
+FD: net/minecraft/block/DecoratedPotPatterns/SHEAF_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/SHEAF
+FD: net/minecraft/block/DecoratedPotPatterns/SHELTER_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/SHELTER
+FD: net/minecraft/block/DecoratedPotPatterns/SKULL_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/SKULL
+FD: net/minecraft/block/DecoratedPotPatterns/SNORT_POTTERY_PATTERN_KEY net/minecraft/block/DecoratedPotPatterns/SNORT
+FD: net/minecraft/entity/effect/StatusEffect$EffectAttributeModifierCreator/uuid net/minecraft/entity/effect/StatusEffect$EffectAttributeModifierCreator/id
+FD: net/minecraft/particle/SimpleParticleType/PACKET_CODEC net/minecraft/particle/SimpleParticleType/packetCodec
+FD: net/minecraft/command/EntitySelectorReader/predicate net/minecraft/command/EntitySelectorReader/predicates
+FD: net/minecraft/server/world/ServerChunkManager/threadedAnvilChunkStorage net/minecraft/server/world/ServerChunkManager/chunkLoadingManager
+FD: net/minecraft/entity/mob/ZombifiedPiglinEntity/ATTACKING_SPEED_BOOST_ID net/minecraft/entity/mob/ZombifiedPiglinEntity/ATTACKING_SPEED_MODIFIER_ID
+FD: net/minecraft/predicate/entity/EntityPredicate$Builder/location net/minecraft/predicate/entity/EntityPredicate$Builder/positional
+FD: net/minecraft/server/network/ServerPlayerEntity/CREATIVE_BLOCK_INTERACTION_RANGE_MODIFIER_UUID net/minecraft/server/network/ServerPlayerEntity/CREATIVE_BLOCK_INTERACTION_RANGE_MODIFIER
+FD: net/minecraft/server/network/ServerPlayerEntity/CREATIVE_ENTITY_INTERACTION_RANGE_MODIFIER_UUID net/minecraft/server/network/ServerPlayerEntity/CREATIVE_ENTITY_INTERACTION_RANGE_MODIFIER
+FD: net/minecraft/loot/context/LootContextParameters/DIRECT_KILLER_ENTITY net/minecraft/loot/context/LootContextParameters/DIRECT_ATTACKING_ENTITY
+FD: net/minecraft/loot/context/LootContextParameters/KILLER_ENTITY net/minecraft/loot/context/LootContextParameters/ATTACKING_ENTITY
+FD: net/minecraft/structure/StructureTemplateManager/STRUCTURES_DIRECTORY net/minecraft/structure/StructureTemplateManager/STRUCTURE_DIRECTORY
+FD: net/minecraft/server/world/ServerLightingProvider/chunkStorage net/minecraft/server/world/ServerLightingProvider/chunkLoadingManager
+FD: net/minecraft/entity/projectile/FishingBobberEntity/luckOfTheSeaLevel net/minecraft/entity/projectile/FishingBobberEntity/luckBonus
+FD: net/minecraft/entity/projectile/FishingBobberEntity/lureLevel net/minecraft/entity/projectile/FishingBobberEntity/waitTimeReductionTicks
+FD: net/minecraft/loot/function/SetAttributesLootFunction$AttributeBuilder/uuid net/minecraft/loot/function/SetAttributesLootFunction$AttributeBuilder/id
+FD: net/minecraft/server/network/ServerPlayNetworkHandler/teleportRequestTick net/minecraft/server/network/ServerPlayNetworkHandler/prevTeleportCheckTicks
+FD: net/minecraft/entity/attribute/EntityAttributeModifier/uuid net/minecraft/entity/attribute/EntityAttributeModifier/id
+FD: net/minecraft/loot/function/LootingEnchantLootFunction$Builder/countRange net/minecraft/loot/function/EnchantedCountIncreaseLootFunction$Builder/count
+FD: net/minecraft/loot/function/LootingEnchantLootFunction/countRange net/minecraft/loot/function/EnchantedCountIncreaseLootFunction/count
+FD: net/minecraft/loot/function/EnchantWithLevelsLootFunction$Builder/range net/minecraft/loot/function/EnchantWithLevelsLootFunction$Builder/levels
+FD: net/minecraft/loot/function/EnchantWithLevelsLootFunction/range net/minecraft/loot/function/EnchantWithLevelsLootFunction/levels
+FD: net/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket/id net/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket/entityId
+FD: net/minecraft/client/render/chunk/BlockBufferBuilderStorage/builders net/minecraft/client/render/chunk/BlockBufferAllocatorStorage/allocators
+FD: net/minecraft/network/packet/c2s/play/CraftRequestC2SPacket/recipe net/minecraft/network/packet/c2s/play/CraftRequestC2SPacket/recipeId
+FD: net/minecraft/network/packet/s2c/play/EntityStatusS2CPacket/id net/minecraft/network/packet/s2c/play/EntityStatusS2CPacket/entityId
+FD: net/minecraft/network/packet/s2c/play/EntityPositionS2CPacket/id net/minecraft/network/packet/s2c/play/EntityPositionS2CPacket/entityId
+FD: net/minecraft/network/packet/s2c/play/EntityAnimationS2CPacket/id net/minecraft/network/packet/s2c/play/EntityAnimationS2CPacket/entityId
+FD: net/minecraft/network/packet/s2c/play/OpenHorseScreenS2CPacket/slotCount net/minecraft/network/packet/s2c/play/OpenHorseScreenS2CPacket/slotColumnCount
+FD: net/minecraft/network/packet/s2c/play/EntitySetHeadYawS2CPacket/entity net/minecraft/network/packet/s2c/play/EntitySetHeadYawS2CPacket/entityId
+FD: net/minecraft/network/packet/s2c/play/ExperienceOrbSpawnS2CPacket/id net/minecraft/network/packet/s2c/play/ExperienceOrbSpawnS2CPacket/entityId
+FD: net/minecraft/network/packet/s2c/play/EntityPassengersSetS2CPacket/id net/minecraft/network/packet/s2c/play/EntityPassengersSetS2CPacket/entityId
+FD: net/minecraft/network/packet/s2c/play/EntityVelocityUpdateS2CPacket/id net/minecraft/network/packet/s2c/play/EntityVelocityUpdateS2CPacket/entityId
+FD: net/minecraft/client/render/entity/feature/BreezeWindFeatureRenderer/texture net/minecraft/client/render/entity/feature/BreezeWindFeatureRenderer/TEXTURE
+FD: net/minecraft/network/packet/s2c/play/EntityEquipmentUpdateS2CPacket/id net/minecraft/network/packet/s2c/play/EntityEquipmentUpdateS2CPacket/entityId
+MD: net/minecraft/world/World/getNextMapId ()Lnet/minecraft/component/type/MapIdComponent; net/minecraft/world/World/increaseAndGetMapId ()Lnet/minecraft/component/type/MapIdComponent;
+MD: net/minecraft/entity/Entity/addVelocity (Lnet/minecraft/util/math/Vec3d;)V net/minecraft/entity/Entity/addVelocityInternal (Lnet/minecraft/util/math/Vec3d;)V
+MD: net/minecraft/util/Identifier/of (Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/Identifier; net/minecraft/util/Identifier/tryParse (Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/Identifier;
+MD: net/minecraft/client/util/Window/applyVideoMode ()V net/minecraft/client/util/Window/applyFullscreenVideoMode ()V
+MD: net/minecraft/client/util/Window/getVideoMode ()Ljava/util/Optional; net/minecraft/client/util/Window/getFullscreenVideoMode ()Ljava/util/Optional;
+MD: net/minecraft/client/util/Window/setVideoMode (Ljava/util/Optional;)V net/minecraft/client/util/Window/setFullscreenVideoMode (Ljava/util/Optional;)V
+MD: net/minecraft/world/PortalForcer/getPortalRect (Lnet/minecraft/util/math/BlockPos;ZLnet/minecraft/world/border/WorldBorder;)Ljava/util/Optional; net/minecraft/world/dimension/PortalForcer/getPortalPos (Lnet/minecraft/util/math/BlockPos;ZLnet/minecraft/world/border/WorldBorder;)Ljava/util/Optional;
+MD: net/minecraft/fluid/FlowableFluid/getFlowSpeed (Lnet/minecraft/world/WorldView;)I net/minecraft/fluid/FlowableFluid/getMaxFlowDistance (Lnet/minecraft/world/WorldView;)I
+MD: net/minecraft/fluid/FlowableFluid/getFlowSpeedBetween (Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/util/math/Direction;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I net/minecraft/fluid/FlowableFluid/getMinFlowDownDistance (Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;ILnet/minecraft/util/math/Direction;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lit/unimi/dsi/fastutil/shorts/Short2ObjectMap;Lit/unimi/dsi/fastutil/shorts/Short2BooleanMap;)I
+MD: net/minecraft/world/IdCountsState/getNextMapId ()Lnet/minecraft/component/type/MapIdComponent; net/minecraft/world/IdCountsState/increaseAndGetMapId ()Lnet/minecraft/component/type/MapIdComponent;
+MD: net/minecraft/block/enums/Instrument/shouldSpawnNoteParticles ()Z net/minecraft/block/enums/NoteBlockInstrument/canBePitched ()Z
+MD: net/minecraft/util/crash/CrashReport/addStackTrace (Ljava/lang/StringBuilder;)V net/minecraft/util/crash/CrashReport/addDetails (Ljava/lang/StringBuilder;)V
+MD: net/minecraft/datafixer/fix/LeavesFix$ListFixer/needsFix ()Z net/minecraft/datafixer/fix/LeavesFix$ListFixer/computeIsFixed ()Z
+MD: net/minecraft/datafixer/fix/LeavesFix$ListFixer/needsFix (I)I net/minecraft/datafixer/fix/LeavesFix$ListFixer/blockStateAt (I)I
+MD: net/minecraft/client/option/GameOptions/getPercentOrOffValueText (Lnet/minecraft/text/Text;D)Lnet/minecraft/text/Text; net/minecraft/client/option/GameOptions/getPercentValueOrOffText (Lnet/minecraft/text/Text;D)Lnet/minecraft/text/Text;
+MD: net/minecraft/entity/passive/AnimalEntity/method_48926 ()Lnet/minecraft/world/World; net/minecraft/entity/passive/AnimalEntity/getWorld ()Lnet/minecraft/world/World;
+MD: net/minecraft/command/EntitySelectorReader/setPredicate (Ljava/util/function/Predicate;)V net/minecraft/command/EntitySelectorReader/addPredicate (Ljava/util/function/Predicate;)V
+MD: net/minecraft/structure/pool/StructurePools/of (Ljava/lang/String;)Lnet/minecraft/registry/RegistryKey; net/minecraft/structure/pool/StructurePools/ofVanilla (Ljava/lang/String;)Lnet/minecraft/registry/RegistryKey;
+MD: net/minecraft/client/gui/widget/CheckboxWidget/getSize (Lnet/minecraft/client/font/TextRenderer;)I net/minecraft/client/gui/widget/CheckboxWidget/getCheckboxSize (Lnet/minecraft/client/font/TextRenderer;)I
+MD: net/minecraft/command/argument/ItemStringReader$Callbacks/onComponent (Lnet/minecraft/component/DataComponentType;Ljava/lang/Object;)V net/minecraft/command/argument/ItemStringReader$Callbacks/onComponentAdded (Lnet/minecraft/component/ComponentType;Ljava/lang/Object;)V
+MD: net/minecraft/component/type/ItemEnchantmentsComponent/getEnchantmentsMap ()Ljava/util/Set; net/minecraft/component/type/ItemEnchantmentsComponent/getEnchantmentEntries ()Ljava/util/Set;
+MD: net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getAlpha ()F net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getGreen ()F
+MD: net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getBlue ()F net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getRed ()F
+MD: net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getGreen ()F net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getBlue ()F
+MD: net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getRed ()F net/minecraft/client/render/debug/GameTestDebugRenderer$Marker/getAlpha ()F
+MD: net/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket/getEntityId ()I
+MD: net/minecraft/network/packet/c2s/play/CraftRequestC2SPacket/getRecipe ()Lnet/minecraft/util/Identifier; net/minecraft/network/packet/c2s/play/CraftRequestC2SPacket/getRecipeId ()Lnet/minecraft/util/Identifier;
+MD: net/minecraft/network/packet/s2c/play/EntityPositionS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/EntityPositionS2CPacket/getEntityId ()I
+MD: net/minecraft/network/packet/s2c/play/EntityAnimationS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/EntityAnimationS2CPacket/getEntityId ()I
+MD: net/minecraft/network/packet/s2c/play/OpenHorseScreenS2CPacket/getSlotCount ()I net/minecraft/network/packet/s2c/play/OpenHorseScreenS2CPacket/getSlotColumnCount ()I
+MD: net/minecraft/network/packet/s2c/play/ExperienceOrbSpawnS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/ExperienceOrbSpawnS2CPacket/getEntityId ()I
+MD: net/minecraft/network/packet/s2c/play/EntityPassengersSetS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/EntityPassengersSetS2CPacket/getEntityId ()I
+MD: net/minecraft/network/packet/s2c/play/EntityVelocityUpdateS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/EntityVelocityUpdateS2CPacket/getEntityId ()I
+MD: net/minecraft/network/packet/s2c/play/EntityEquipmentUpdateS2CPacket/getId ()I net/minecraft/network/packet/s2c/play/EntityEquipmentUpdateS2CPacket/getEntityId ()I

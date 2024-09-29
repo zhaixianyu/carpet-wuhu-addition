@@ -1,0 +1,3 @@
+v1	named	intermediary
+FIELD	com/zxy/carpet_wh_addition/mixin/EnderDragoEntityMixin	Lnet/minecraft/entity/boss/dragon/EnderDragonFight;	fight	field_7016
+FIELD	com/zxy/carpet_wh_addition/mixin/PlacementAndDestruction/ServerPlayNetworkHandlerMixin	Lnet/minecraft/server/network/ServerPlayerEntity;	player	field_14140

@@ -262,6 +262,40 @@ remapJar {
 	remapperIsolation.set(true)
 }
 
+def MIXIN_CONFIG_PATHS = ['carpet-wuhu.mixins.json']
+JavaVersion JAVA_COMPATIBILITY
+if (mcVersion >= 12005) {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_21
+} else if (mcVersion >= 11800) {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_17
+} else if (mcVersion >= 11700) {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_16
+} else {
+	JAVA_COMPATIBILITY = JavaVersion.VERSION_1_8
+}
+JavaVersion MIXIN_COMPATIBILITY_LEVEL = JAVA_COMPATIBILITY
+
+tasks.withType(JavaCompile).configureEach {
+	if(mcVersion >= 12005){
+		it.options.release = 21
+	}else if(mcVersion >=11800){
+		it.options.release = 17
+	}else if(mcVersion >=11700){
+		it.options.release = 16
+	}else{
+		it.options.release = 8
+	}
+
+}
+
+java {
+
+	sourceCompatibility = JAVA_COMPATIBILITY
+	targetCompatibility = JAVA_COMPATIBILITY
+
+	withSourcesJar()
+}
+
 
 processResources {
 	outputs.upToDateWhen { false }
@@ -290,26 +324,14 @@ processResources {
 				"mod_version"         : project.version
 		])
 	}
-}
 
-tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
-}
-
-java {
-	if(mcVersion >= 12005 ){
-		sourceCompatibility(JavaVersion.VERSION_21)
-		targetCompatibility(JavaVersion.VERSION_21)
-	}else if (mcVersion > 11701) {
-		sourceCompatibility(JavaVersion.VERSION_16)
-		targetCompatibility(JavaVersion.VERSION_16)
-	} else {
-		sourceCompatibility(JavaVersion.VERSION_1_8)
-		targetCompatibility(JavaVersion.VERSION_1_8)
+	MIXIN_CONFIG_PATHS.each {mixinConfigPath ->
+		filesMatching(mixinConfigPath) {
+			filter { s -> s.replace('{{COMPATIBILITY_LEVEL}}', "JAVA_${MIXIN_COMPATIBILITY_LEVEL.ordinal() + 1}") }
+		}
 	}
-
-	withSourcesJar()
 }
+
 
 //jar {
 ////	from("${rootDir}/LICENSE")

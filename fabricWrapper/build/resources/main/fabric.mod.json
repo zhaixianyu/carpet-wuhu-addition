@@ -1,10 +1,10 @@
 {
     "schemaVersion": 1,
-    "id": "litematica-printer",
-    "version": "2.4+20240729",
-    "icon": "assets/litematica-printer/icon.png",
-    "name": "litematica-printer",
-    "description": "Printer All Version",
+    "id": "carpet-wuhu-addition",
+    "version": "1.0.5+20240928",
+    "icon": "assets/carpet-wuhu-addition/icon.png",
+    "name": "carpet-wuhu-addition",
+    "description": "abab",
     "authors": [
         {
             "name": "zhaixianyu",
@@ -15,17 +15,16 @@
     ],
     "contact": {
         "homepage": "https://space.bilibili.com/31545812",
-        "issues": "https://github.com/zhaixianyu/litematica-printer/issues",
-        "sources": "https://github.com/zhaixianyu/litematica-printer"
+        "issues": "https://github.com/zhaixianyu/carpet-wh-addition/issues",
+        "sources": "https://github.com/zhaixianyu/carpet-wh-addition"
     },
-    "license": "CC0-1.0",
+    "license": "LGPLv3",
     "environment": "*",
     "entrypoints": {
         
     },
     "depends": {
-        "malilib": "*",
-        "java": ">=21",
+        "carpet": "*",
         "minecraft": [
             "1.18.2",
             "1.19.4",
@@ -33,7 +32,8 @@
             "1.20.2",
             "1.20.4",
             "1.20.6",
-            "1.21"
+            "1.21",
+            "1.21.1"
         ]
     },
     "custom": {
@@ -43,25 +43,28 @@
     },
     "jars": [
         {
-            "file": "META-INF/jars/litematica-printer-1.18.2-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.18.2-1.0.5+20240928.jar"
         },
         {
-            "file": "META-INF/jars/litematica-printer-1.19.4-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.19.4-1.0.5+20240928.jar"
         },
         {
-            "file": "META-INF/jars/litematica-printer-1.20.1-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.20.1-1.0.5+20240928.jar"
         },
         {
-            "file": "META-INF/jars/litematica-printer-1.20.2-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.20.2-1.0.5+20240928.jar"
         },
         {
-            "file": "META-INF/jars/litematica-printer-1.20.4-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.20.4-1.0.5+20240928.jar"
         },
         {
-            "file": "META-INF/jars/litematica-printer-1.20.6-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.20.6-1.0.5+20240928.jar"
         },
         {
-            "file": "META-INF/jars/litematica-printer-1.21-2.4+20240729.jar"
+            "file": "META-INF/jars/carpet-wuhu-addition-1.21-1.0.5+20240928.jar"
+        },
+        {
+            "file": "META-INF/jars/carpet-wuhu-addition-1.21.1-1.0.5+20240928.jar"
         }
     ]
 }

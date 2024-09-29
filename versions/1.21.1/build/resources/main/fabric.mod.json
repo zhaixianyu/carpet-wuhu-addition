@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "carpet-wuhu-addition-1_21_1",
+  "version": "1.0.5+20240928",
+  "name": "carpet-wuhu-addition",
+  "description": "wuhu!!",
+  "authors": [],
+  "contact": {
+    "website": "https://space.bilibili.com/31545812",
+    "homepage": "https://github.com/zhaixianyu/carpet-wh-addition",
+    "sources": "https://github.com/zhaixianyu/carpet-wh-addition",
+    "repo": "https://github.com/zhaixianyu"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/carpet_wh_addition/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.zxy.carpet_wh_addition.CarpetWuHuAddition"
+    ]
+  },
+  "mixins": [
+    "carpet-wuhu.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "1.21.1",
+    "carpet": "*"
+  }
+}

@@ -1,0 +1,11 @@
+/gamemode survival
+/gamemode creative
+/gamemode survival
+/xp add @a 66666 levels
+/carpet wuhu
+/carpet
+/carpet anvilEnchantRemoveRestriction true
+/gamemode creative
+/gamemode survival
+/gamemode creative
+/carpet anvilEnchantRemoveRestriction true

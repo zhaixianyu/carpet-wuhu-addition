@@ -24,7 +24,7 @@
 
   },
   "depends": {
-    "java": ">=21"
+    "carpet": "*"
   },
   "custom": {
     "modmenu": {
