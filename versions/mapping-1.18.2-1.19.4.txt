@@ -1,2 +1,14 @@
-net.minecraft.util.registry.Registry net.minecraft.registry.Registries
-net.minecraft.util.math.Matrix4f org.joml.Matrix4f
+net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+
+carpet.settings.Rule carpet.api.settings.Rule
+carpet.settings.ParsedRule carpet.api.settings.CarpetRule
+carpet.settings.ParsedRule get() carpet.api.settings.CarpetRule value()
+carpet.settings.RuleCategory carpet.api.settings.RuleCategory
+carpet.settings.SettingsManager carpet.api.settings.SettingsManager
+carpet.settings.Validator carpet.api.settings.Validator
+carpet.api.settings.SettingsManager getRule()  getCarpetRule()
+carpet.CarpetServer.settingsManager addRuleObserver() carpet.api.settings.SettingsManager registerRuleObserver()
+carpet.api.settings.SettingsManager getRules() getCarpetRules()
+carpet.script.bundled.BundledModule carpet.script.Module
+carpet.helpers.BlockRotator flip_block() flipBlock()
+carpet.fakes.ServerPlayerEntityInterface carpet.fakes.ServerPlayerInterface

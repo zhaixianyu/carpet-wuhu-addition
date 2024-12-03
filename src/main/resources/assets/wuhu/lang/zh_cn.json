@@ -1,0 +1,14 @@
+{
+  "carpet.rule.remoteOpenInventory.desc": "远程交互容器",
+  "carpet.rule.remoteOpenInventory.name": "远程交互容器",
+  "carpet.rule.infiniteNotRequireArrows.desc": "无限附魔无需箭矢",
+  "carpet.rule.infiniteNotRequireArrows.name": "无限附魔无需箭矢",
+  "carpet.rule.armorStandIgnoredShulkerBullet.desc": "这个特性在1.20.5中被应用，在某些版本中,如1.20.4盔甲架极为容易被潜影贝子弹损坏",
+  "carpet.rule.armorStandIgnoredShulkerBullet.name": "盔甲架无视潜影贝子弹",
+  "carpet.rule.upDataWildDragonFight.desc": "旧版本升级或野生的龙不会有龙战数据,开启后这些龙将会获得当前龙战数据",
+  "carpet.rule.upDataWildDragonFight.name": "更新龙战数据",
+  "carpet.rule.handLength.desc": "玩家手长修改",
+  "carpet.rule.handLength.name": "手长",
+  "carpet.rule.anvilEnchantRemoveRestriction.desc": "铁砧附魔限制解除",
+  "carpet.rule.anvilEnchantRemoveRestriction.name": "铁砧附魔限制解除"
+}

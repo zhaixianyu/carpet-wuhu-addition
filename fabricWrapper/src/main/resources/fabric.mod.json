@@ -21,13 +21,14 @@
   "license": "${mod_license}",
   "environment": "*",
   "entrypoints": {
-    "modmenu": [
-      "com.zxy.wuhuclient.config.ModMenu"
-    ]
+
   },
   "depends": {
-    "malilib": "*"
+    "carpet": "*"
   },
   "custom": {
+    "modmenu": {
+      "parent": "carpet"
+    }
   }
 }

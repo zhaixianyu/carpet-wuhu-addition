@@ -1,41 +1,29 @@
 {
-	"schemaVersion": 1,
-	"id": "${mod_id}-${minecraft_version_id}",
-	"version": "${mod_version}",
-	"name": "${mod_name}",
-	"description": "This is an example description! Tell everyone what your mod is about!",
-	"authors": [
-		"zhaixianyu"
-	],
-	"contact": {
-		"website": "${mod_homepage}",
-		"homepage": "${mod_sources}",
-		"sources": "${mod_sources}"
-	},
-	"license": "${mod_license}",
-	"icon": "assets/${mod_id}/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"com.zxy.wuhuclient.WuHuClientMod"
-		],
-		"modmenu": [
-			"com.zxy.wuhuclient.config.ModMenu"
-		]
-	},
-	"mixins": [
-		"wuhuclient.mixins.json"
-	],
-	"depends": {
-		"minecraft": "${minecraft_dependency}"
-	},
-	"custom": {
-		"modmenu:parent": "${mod_id}",
-		"modmenu": {
-			"parent": "${mod_id}"
-		}
-	},
-	"suggests": {
-		"modmenu": "*"
-	}
+  "schemaVersion": 1,
+  "id": "${mod_id}-${minecraft_version_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "wuhu!!",
+  "authors": [],
+  "contact": {
+    "website": "${mod_homepage}",
+    "homepage": "${mod_sources}",
+    "sources": "${mod_sources}",
+    "repo": "https://github.com/zhaixianyu"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/carpet_wh_addition/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.zxy.carpet_wh_addition.CarpetWuHuAddition"
+    ]
+  },
+  "mixins": [
+    "carpet-wuhu.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "${minecraft_dependency}",
+    "carpet": "*"
+  }
 }
