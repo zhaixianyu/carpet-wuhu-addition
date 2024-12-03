@@ -63,6 +63,6 @@ public class Command {
 //        ) -> {
 ////            Command.register(dispatcher1);
 //        });
-        Command.register(dispatcher);
+//        Command.register(dispatcher);
     }
 }

@@ -9,6 +9,7 @@
     "EnderDragoEntityMixin",
     "PlayerEntityMixin",
     "Test",
+    "infiniteTreasureTrove.VaultServerDataMixin",
     "openInv.InventoryMixin",
     "openInv.MixinGenericContainerScreenHandler",
     "openInv.MixinLootableContainerBlockEntity",
@@ -22,7 +23,6 @@
     "setting.SettingsManagerAccessor"
   ],
   "client": [
-
   ],
   "injectors": {
     "defaultRequire": 1

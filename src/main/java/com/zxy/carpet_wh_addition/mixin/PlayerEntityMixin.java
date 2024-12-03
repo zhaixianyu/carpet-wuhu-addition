@@ -31,7 +31,7 @@ public class PlayerEntityMixin {
     //#if MC > 12004
     @Inject(at = @At("RETURN"),method = "getBlockInteractionRange", cancellable = true)
     public void getBlockInteractionRange(CallbackInfoReturnable<Double> cir){
-        if(!((PlayerEntity)(Object)this).getWorld().isClient) cir.setReturnValue(handLength);
+        if(!((PlayerEntity)(Object)this).getWorld().isClient && handLength != -1) cir.setReturnValue(handLength);
     }
     //#else
     //#endif

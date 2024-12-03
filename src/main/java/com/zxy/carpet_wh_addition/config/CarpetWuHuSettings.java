@@ -18,8 +18,12 @@ public class CarpetWuHuSettings {
     public static boolean upDataWildDragonFight = false;
     //手长
     @Rule(categories = WUHU)
-    public static double handLength = 6;
+    public static double handLength = -1;
     //铁砧附魔解除限制
     @Rule(categories = WUHU)
     public static boolean anvilEnchantRemoveRestriction = false;
+    //无限宝库
+    @Rule(categories = WUHU)
+    public static boolean infiniteTreasureTrove = false;
+
 }
