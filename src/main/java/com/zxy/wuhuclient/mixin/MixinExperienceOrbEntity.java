@@ -3,6 +3,8 @@ package com.zxy.wuhuclient.mixin;
 
 import com.zxy.wuhuclient.config.Configs;
 import com.zxy.wuhuclient.features_list.AutoMending;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;

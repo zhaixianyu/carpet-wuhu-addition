@@ -38,7 +38,7 @@ public class SyncInventory {
     static Map<ItemStack, Integer> targetItemsCount = new HashMap<>();
     static Map<ItemStack, Integer> playerItemsCount = new HashMap<>();
 
-    private static void getReadyColor() {
+    public static void getReadyColor() {
         HighlightBlockRenderer.createHighlightBlockList(syncInventoryId,SYNC_INVENTORY_COLOR);
         highlightPosList = HighlightBlockRenderer.getHighlightBlockPosList(syncInventoryId);
     }

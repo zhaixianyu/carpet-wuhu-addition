@@ -37,7 +37,9 @@ public class Configs implements IConfigHandler {
     public static final ConfigStringList SEARCH_BLOCK_LIST = new ConfigStringList( "搜索方块列表",ImmutableList.of() ,"输入 \"-a\" 后缀会被识别为全称");
     public static final ConfigBooleanHotkeyed LITEMATICA_HELPER = new ConfigBooleanHotkeyed("投影材料助手",false,"","开启后将允许选区选中投影方块，会根据框选的投影更新材料列表。打开容器自动拿取对应材料\n安装箱子追踪后可高亮箱子\n"+"取物品功能来自 Fallen_Breath的TweakerMore");
     public static final ConfigBoolean LITEMATICA_HELPER_TIPS = new ConfigBoolean("投影材料助手提示",true,"","交互容器后的存放提示");
+    public static final ConfigHotkey REFRESH_MATERIALS = new ConfigHotkey("刷新材料列表","","相当于点击了材料列表的刷新按钮");
     public static final ConfigHotkey ADD_INVENTORY = new ConfigHotkey( "打开容器后关闭", "","按下后将打开选区内的容器然后关闭，再次按下取消高亮");
+
 
 
     //兼容
@@ -75,6 +77,7 @@ public class Configs implements IConfigHandler {
         list.add(SEARCH_BLOCK_LIST);
         list.add(LITEMATICA_HELPER);
         list.add(LITEMATICA_HELPER_TIPS);
+        list.add(REFRESH_MATERIALS);
         list.add(ADD_INVENTORY);
 //        list.add(TEST);
 
@@ -90,12 +93,13 @@ public class Configs implements IConfigHandler {
         return ImmutableList.copyOf(list);
     }
 
-    //按下时激活
+    //按下时激活一次
     public static final ImmutableList<ConfigHotkey> KEY_LIST = ImmutableList.of(
             WUHU_CLIENT,
             SYNC_INVENTORY,
             SEARCH_BLOCK,
-            ADD_INVENTORY
+            ADD_INVENTORY,
+            REFRESH_MATERIALS
     );
     //切换型开关
     public static final ImmutableList<IHotkeyTogglable> SWITCH_KEY = ImmutableList.of(

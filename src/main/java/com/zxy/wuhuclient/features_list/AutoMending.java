@@ -9,11 +9,12 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.SlotActionType;
 
+import static com.zxy.wuhuclient.Utils.InventoryUtils.client;
 import static com.zxy.wuhuclient.Utils.InventoryUtils.getEnchantmentLevel;
 
 
 public class AutoMending {
-    static AutoMending auto;
+    static AutoMending auto = new AutoMending(client);
     MinecraftClient mc;
     ClientPlayerEntity player;
     int fushou = -1;
@@ -42,7 +43,7 @@ public class AutoMending {
                             item.equals(player.getMainHandStack()) ||
                             i == 45 || i == 5 || i == 6 || i == 7 || i == 8
             ) continue;
-            autoSwitch(i, 45);
+            autoSwitch(i);
             fushou = i;
             run = true;
             break;
@@ -55,7 +56,7 @@ public class AutoMending {
         tick %= Integer.MAX_VALUE;
     }
 
-    public boolean autoSwitch(int a, int b) {
+    public boolean autoSwitch(int a) {
         if (mc.interactionManager == null) {
             return false;
         }
@@ -63,9 +64,7 @@ public class AutoMending {
             return false;
         }
         ScreenHandler screenHandler = player.currentScreenHandler;
-        mc.interactionManager.clickSlot(screenHandler.syncId, a, 0, SlotActionType.PICKUP, player);
-        mc.interactionManager.clickSlot(screenHandler.syncId, b, 0, SlotActionType.PICKUP, player);
-        mc.interactionManager.clickSlot(screenHandler.syncId, a, 0, SlotActionType.PICKUP, player);
+        mc.interactionManager.clickSlot(screenHandler.syncId, a, 40, SlotActionType.SWAP, player);
         return true;
     }
 
@@ -73,7 +72,7 @@ public class AutoMending {
         ScreenHandler sc = player.currentScreenHandler;
         if (run && sc.equals(player.playerScreenHandler)) {
 //            System.out.println("副手归位: " + temp);
-            if (fushou != -1 && autoSwitch(fushou, 45)) {
+            if (fushou != -1 && autoSwitch(fushou)) {
                 tick = 0;
                 fushou = -1;
                 run = false;
