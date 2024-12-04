@@ -35,6 +35,7 @@ public class ServerPlayNetworkHandlerMixin {
         //#if MC > 11802
         //$$ @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Vec3d;squaredDistanceTo(Lnet/minecraft/util/math/Vec3d;)D"), method = "onPlayerInteractBlock")
         //$$ public double squaredDistanceTo1(Vec3d instance, Vec3d vec, Operation<Double> original) {
+        //$$     if (handLength < 0 ) return original.call(instance, vec);
         //$$     double d = vec.x - instance.x;
         //$$     double e = vec.y - instance.y;
         //$$     double f = vec.z - instance.z;
@@ -46,6 +47,7 @@ public class ServerPlayNetworkHandlerMixin {
     //$$
     //$$  @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;squaredDistanceTo(DDD)D"), method = "onPlayerInteractBlock")
     //$$  public double squaredDistanceTo2(ServerPlayerEntity instance, double x, double y, double z, Operation<Double> original) {
+    //$$      if (handLength < 0 ) return original.call(instance, x, y, z);
     //$$      double d = x - instance.getX();
     //$$      double e = y - instance.getY();
     //$$      double f = z - instance.getZ();

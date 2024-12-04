@@ -11,8 +11,7 @@
   "carpet.rule.handLength.name": "手长",
   "carpet.rule.anvilEnchantRemoveRestriction.desc": "铁砧附魔限制解除",
   "carpet.rule.anvilEnchantRemoveRestriction.name": "铁砧附魔限制解除",
-  "carpet.rule.infiniteTreasureTrove.desc": "无限宝库",
-  "carpet.rule.infiniteTreasureTrove.name": "取消玩家每个宝库仅能开启一次的限制"
-
+  "carpet.rule.infiniteTreasureTrove.desc": "取消玩家每个宝库仅能开启一次的限制",
+  "carpet.rule.infiniteTreasureTrove.name": "无限宝库"
 
 }

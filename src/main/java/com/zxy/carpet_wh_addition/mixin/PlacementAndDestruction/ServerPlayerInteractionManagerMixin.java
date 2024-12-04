@@ -18,6 +18,7 @@ public class ServerPlayerInteractionManagerMixin {
     //#elseif MC > 11802
     //$$ @WrapOperation(at = @At(value = "INVOKE",target = "Lnet/minecraft/util/math/Vec3d;squaredDistanceTo(Lnet/minecraft/util/math/Vec3d;)D",ordinal = 0),method = "processBlockBreakingAction")
     //$$ public double processBlockBreakingAction(Vec3d instance, Vec3d vec, Operation<Double> original){
+    //$$     if (handLength < 0 ) return original.call(instance, vec);
     //$$     double d = vec.x - instance.x;
     //$$     double e = vec.y - instance.y;
     //$$     double f = vec.z - instance.z;
@@ -29,6 +30,7 @@ public class ServerPlayerInteractionManagerMixin {
     //$$
     //$$ @ModifyVariable(method = "processBlockBreakingAction", at = @At("STORE"), ordinal = 3)
     //$$ private double modifyDistance(double g) {
+    //$$     if (handLength < 0 ) return g;
     //$$     return g > handLength * handLength ? 100 : -1;
     //$$     // 修改计算的距离值
 //        return handLength * handLength;
