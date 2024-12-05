@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayList;
+
 import static com.zxy.carpet_wh_addition.OpenInventoryPacket.playerlist;
 import static com.zxy.carpet_wh_addition.OpenInventoryPacket.tickMap;
 
