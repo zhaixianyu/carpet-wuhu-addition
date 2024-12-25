@@ -20,6 +20,7 @@ import java.util.Map;
 
 import static com.zxy.carpet_wh_addition.OpenInventoryPacket.playerlist;
 import static com.zxy.carpet_wh_addition.OpenInventoryPacket.tickMap;
+import static com.zxy.carpet_wh_addition.featuresList.AutoMending.mending;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class MixinServerPlayerEntity extends PlayerEntity{
@@ -42,10 +43,11 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity{
     @Unique
     private void deletePlayerList(){
         playerlist.removeIf(player -> player.getUuid().equals(getUuid()));
-        List<Map.Entry<ServerPlayerEntity, TickList>> list = tickMap.entrySet().stream().filter(k -> k.getKey().getUuid().equals(getUuid())).toList();
-        for (Map.Entry<ServerPlayerEntity, TickList> serverPlayerEntityTickListEntry : list) {
-            tickMap.remove(serverPlayerEntityTickListEntry.getKey());
-        }
+        tickMap.entrySet().removeIf(k -> k.getKey().getUuid().equals(getUuid()));
+//        List<Map.Entry<ServerPlayerEntity, TickList>> list = tickMap.entrySet().stream().filter(k -> k.getKey().getUuid().equals(getUuid())).toList();
+//        for (Map.Entry<ServerPlayerEntity, TickList> serverPlayerEntityTickListEntry : list) {
+//            tickMap.remove(serverPlayerEntityTickListEntry.getKey());
+//        }
     }
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;canUse(Lnet/minecraft/entity/player/PlayerEntity;)Z"),method = "tick")
     public boolean onTick(ScreenHandler instance, PlayerEntity playerEntity, Operation<Boolean> original){
@@ -55,5 +57,11 @@ public abstract class MixinServerPlayerEntity extends PlayerEntity{
             }
         }
         return instance.canUse(playerEntity);
+    }
+    @Inject(at = @At("TAIL"),method = "tick")
+    public void tick(CallbackInfo ci){
+        if (this.getWorld().getTime() % 20 == 0) {
+            mending((ServerPlayerEntity) (Object)this);
+        }
     }
 }

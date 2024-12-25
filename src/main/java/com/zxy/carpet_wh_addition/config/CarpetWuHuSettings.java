@@ -25,5 +25,8 @@ public class CarpetWuHuSettings {
     //无限宝库
     @Rule(categories = WUHU)
     public static boolean infiniteTreasureTrove = false;
+    //自动经验修补
+    @Rule(categories = WUHU)
+    public static boolean autoMending = false;
 
 }

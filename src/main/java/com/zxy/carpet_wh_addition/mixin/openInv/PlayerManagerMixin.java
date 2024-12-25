@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static com.zxy.carpet_wh_addition.CarpetWuHuAddition.loadPrinter;
 
 //#if MC > 12001
-//$$ import net.minecraft.server.network.ConnectedClientData;
+import net.minecraft.server.network.ConnectedClientData;
 //#endif
 
 @Mixin(PlayerManager.class)
@@ -19,7 +19,7 @@ public class PlayerManagerMixin {
     @Inject(at = @At("RETURN"), method = "onPlayerConnect")
     private void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player,
                                  //#if MC > 12001
-                                 //$$ ConnectedClientData clientData,
+                                 ConnectedClientData clientData,
                                  //#endif
                                  CallbackInfo ci) {
             OpenInventoryPacket.helloRemote(player);
