@@ -22,8 +22,10 @@ package com.zxy.carpet_wh_addition.mixin.setting;
 
 import carpet.api.settings.CarpetRule;
 import carpet.api.settings.SettingsManager;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.gen.Invoker;
 
 import java.util.Map;
 
@@ -31,4 +33,13 @@ import java.util.Map;
 public interface SettingsManagerAccessor {
     @Accessor(value = "rules", remap = false)
     Map<String, CarpetRule<?>> getRules$AMS();
+
+    //#if MC > 11802
+    @Invoker("displayInteractiveSetting")
+    Text displayInteractiveSettings(CarpetRule<?> rule);
+    //#else
+
+    //#endif
+    
+
 }

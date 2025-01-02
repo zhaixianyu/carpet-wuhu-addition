@@ -15,11 +15,11 @@ public class CarpetWuHuSettings {
     public static boolean armorStandIgnoredShulkerBullet = false;
     //更新野生龙龙战数据
     @Rule(categories = WUHU)
-    public static boolean upDataWildDragonFight = false;
+    public static boolean dragonsDropMoreExperience = false;
     //手长
     @Rule(categories = WUHU)
     public static double handLength = -1;
-    //铁砧附魔解除限制
+    //铁砧附魔等级解除限制
     @Rule(categories = WUHU)
     public static boolean anvilEnchantRemoveRestriction = false;
     //无限宝库
@@ -28,5 +28,7 @@ public class CarpetWuHuSettings {
     //自动经验修补
     @Rule(categories = WUHU)
     public static boolean autoMending = false;
-
+    //carpet命令搜索
+    @Rule(categories = WUHU)
+    public static boolean commandSearch = true;
 }
