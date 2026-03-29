@@ -98,7 +98,7 @@ publishing {
     publications {
         register("mavenJava", MavenPublication) {
             artifactId("${project.mod_id}")
-            version("${rootProject.getMavenArtifactVersion()}")
+            version("all-" + version)
             from(components.java)
         }
     }

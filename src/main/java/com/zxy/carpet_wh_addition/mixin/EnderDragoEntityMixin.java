@@ -18,14 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import static com.zxy.carpet_wh_addition.config.CarpetWuHuSettings.dragonsDropMoreExperience;
 
 @Mixin(EnderDragonEntity.class)
-public class EnderDragoEntityMixin extends MobEntity{
+public class EnderDragoEntityMixin{
     @Shadow
     private EnderDragonFight fight;
-
-    protected EnderDragoEntityMixin(EntityType<? extends MobEntity> entityType, World world) {
-        super(entityType, world);
-    }
-
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/boss/dragon/EnderDragonFight;hasPreviouslyKilled()Z"), method = "updatePostDeath")
     private boolean hasPreviouslyKilled(EnderDragonFight instance, Operation<Boolean> original){
         if(dragonsDropMoreExperience) return false;
@@ -36,8 +31,8 @@ public class EnderDragoEntityMixin extends MobEntity{
     @Inject(at = @At(value = "HEAD"), method = "updatePostDeath")
     private void test(CallbackInfo ci) {
         EnderDragonFight fight1 = fight;
-        World world = this.getWorld();
-        if(fight1 == null && dragonsDropMoreExperience && !world.isClient){
+        World world = ((EnderDragonEntity)(Object)this).getEntityWorld();
+        if(fight1 == null && dragonsDropMoreExperience && !world.isClient()){
             fight = ((ServerWorld) world).getEnderDragonFight();
         }
     }

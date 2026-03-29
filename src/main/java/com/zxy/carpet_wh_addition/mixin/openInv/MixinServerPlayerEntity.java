@@ -58,7 +58,7 @@ public abstract class MixinServerPlayerEntity{
     }
     @Inject(at = @At("TAIL"),method = "tick")
     public void tick(CallbackInfo ci){
-        if (((ServerPlayerEntity)(Object)this).getWorld().getTime() % 20 == 0) {
+        if (((ServerPlayerEntity)(Object)this).getEntityWorld().getTime() % 20 == 0) {
             mending((ServerPlayerEntity) (Object)this);
         }
     }

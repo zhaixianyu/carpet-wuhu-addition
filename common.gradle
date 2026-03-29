@@ -1,12 +1,3 @@
-import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableMap
-import net.fabricmc.loom.util.Platform
-import org.objectweb.asm.ClassReader
-import org.objectweb.asm.ClassWriter
-import org.objectweb.asm.tree.ClassNode
-import org.objectweb.asm.tree.LdcInsnNode
-
-
 apply(plugin: "fabric-loom")
 apply(plugin: "maven-publish")
 apply(plugin: "com.replaymod.preprocess")
@@ -15,7 +6,6 @@ int mcVersion = 1
 
 preprocess {
 	mcVersion = vars.get().get("MC")
-	tabIndentation.set(false)
 }
 
 repositories {
@@ -40,21 +30,6 @@ repositories {
 		url 'https://jitpack.io'
 	}
 
-}
-
-configurations {
-	register("productionRuntimeClient") {configuration ->
-		configurations.findAll { it.name in [
-				"minecraftLibraries",
-				"loaderLibraries",
-				"minecraftRuntimeLibraries"
-		]}.forEach { Configuration superConfigurations ->
-			configuration.extendsFrom(superConfigurations)
-		}
-	}
-
-//	register("productionRuntimeServer")
-//	register("productionRuntimeMods")
 }
 //  1 = modImplementation 2 = modImplementation include 	3 = modApi	4 = modCompileOnly
 // Module, Property prefix, Resolve condition, Transitive depende ncies.
@@ -177,63 +152,6 @@ loom {
 	}
 }
 
-tasks.register("serverPropertiesJar", Jar) {
-	File propsFile = file("build/tmp/install.properties")
-
-	doFirst {
-		if (propsFile.exists()) {
-			propsFile.delete()
-		}
-
-		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(propsFile))
-		bufferedWriter.writeLine("fabric-loader-version=${project.loader_version}")
-		bufferedWriter.writeLine("game-version=${project.minecraft_version}")
-		bufferedWriter.close()
-	}
-
-	archiveFileName.set("server-properties.jar")
-	destinationDirectory.set(file("build/tmp"))
-	from(propsFile)
-}
-
-tasks.register("runProductionClient", JavaExec) {
-	dependsOn(tasks.remapJar)
-	classpath.from(configurations.productionRuntimeClient)
-	mainClass.set("net.fabricmc.loader.impl.launch.knot.KnotClient")
-	workingDir(file("run/client"))
-
-	doFirst {
-		classpath.from(loom.minecraftProvider.minecraftClientJar)
-		args(
-				"--assetIndex", loom.minecraftProvider.versionInfo.assetIndex().fabricId(loom.minecraftProvider.minecraftVersion()),
-				"--assetsDir", file("${loom.files.userCache}/assets").absolutePath,
-				"--gameDir", workingDir.absolutePath,
-				"--width", "1280",
-				"--height", "720"
-		)
-		jvmArgs("-Dmixin.debug.export=true")
-		jvmArgs("-Dfabric.addMods=${configurations.productionRuntimeMods.files.join(File.pathSeparator)}${File.pathSeparator}${tasks.remapJar.archiveFile.get().asFile.absolutePath}")
-
-
-		if (Platform.CURRENT.operatingSystem.isMacOS()) {
-			jvmArgs("-XstartOnFirstThread")
-		}
-	}
-}
-
-tasks.register("runProductionServer", JavaExec) {
-	dependsOn(tasks.remapJar)
-	classpath.from(configurations.productionRuntimeServer, tasks.named("serverPropertiesJar"))
-	mainClass.set("net.fabricmc.installer.ServerLauncher")
-	workingDir(file("run/server"))
-
-	doFirst {
-		args("nogui")
-		jvmArgs("-Dmixin.debug.export=true")
-		jvmArgs("-Dfabric.addMods=${configurations.productionRuntimeMods.files.join(File.pathSeparator)}${File.pathSeparator}${tasks.remapJar.archiveFile.get().asFile.absolutePath}")
-	}
-}
-
 
 tasks.withType(JavaCompile).configureEach {
 	options.encoding("UTF-8")
@@ -327,7 +245,7 @@ publishing {
 	publications {
 		register("mavenJava", MavenPublication) {
 			artifactId("${project.mod_id}-${project.minecraft_version.replace(".", "_")}")
-			version("${rootProject.getMavenArtifactVersion()}")
+			version("${project.minecraft_version}-" + version)
 			from(components.java)
 		}
 	}
@@ -338,67 +256,6 @@ publishing {
 
 		maven {
 			url("$rootDir/publish")
-		}
-	}
-}
-
-ImmutableMap<Object, Object> replaceTokenMap = ImmutableMap.builder()
-		.put("@MOD_IDENTIFIER@"            , project.mod_id)
-		.put("@MOD_NAME@"                  , project.mod_name)
-		.put("@MINECRAFT_VERSION_IDENTIFY@", project.minecraft_version.replace(".", "_"))
-		.build()
-ImmutableList<Object> replaceTokenFile = ImmutableList.builder()
-		.add("Carpet-WuHu-AdditionReference")
-		.build()
-
-tasks.classes {
-	doLast {
-		File dir = file("build/classes/java")
-
-		dir.eachFileRecurse {
-			String path = it.path.replace(dir.path, "")
-
-			if (path.endsWith(".class") && replaceTokenFile.stream().anyMatch { path.contains(it as String) }) {
-				ClassReader cr = new ClassReader(it.newInputStream().bytes)
-				ClassNode cn = new ClassNode()
-				cr.accept(cn, ClassReader.SKIP_FRAMES | ClassReader.SKIP_DEBUG)
-
-				// ReplaceToken in fields
-				cn.fields.each {
-					if (it.desc == "Ljava/lang/String;" && it.value instanceof String) {
-						String value = it.value as String
-
-						replaceTokenMap.each {
-							value = value.replace(it.key as String, it.value as String)
-						}
-
-						it.value = value
-					}
-				}
-
-				// ReplaceToken in methods
-				cn.methods.each {
-					it.instructions.each {
-						if (it instanceof LdcInsnNode) {
-							LdcInsnNode ldc = it as LdcInsnNode
-
-							if (ldc.cst instanceof String) {
-								String value = ldc.cst as String
-
-								replaceTokenMap.each {
-									value = value.replace(it.key as String, it.value as String)
-								}
-
-								ldc.cst = value
-							}
-						}
-					}
-				}
-
-				ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES)
-				cn.accept(cw)
-				new FileOutputStream(it).write(cw.toByteArray())
-			}
 		}
 	}
 }

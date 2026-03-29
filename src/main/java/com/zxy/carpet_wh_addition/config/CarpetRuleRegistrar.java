@@ -30,7 +30,6 @@ import com.zxy.carpet_wh_addition.mixin.setting.ParsedRuleAccessor;
 import com.zxy.carpet_wh_addition.mixin.setting.SettingsManagerAccessor;
 
 
-import javax.annotation.Nullable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -132,7 +131,6 @@ public class CarpetRuleRegistrar {
     //$$    carpet.settings.Rule cmRule = new carpet.settings.Rule() {
     //$$        private final String basedKey = "rule." + this.name() + ".";
     //$$
-    //$$        @Nullable
     //$$        private String tr(String key) {
     //$$            return Translate.getTranslate().get(this.basedKey + key);
     //$$        }
