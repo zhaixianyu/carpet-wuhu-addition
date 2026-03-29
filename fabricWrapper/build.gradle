@@ -7,9 +7,15 @@ plugins {
 }
 def time = new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
 
-group(project.mod_maven_group)
-version(project.mod_version+"+"+time)
+version = gradle.modVersion
 
+tasks.register('printVersion') {
+    doLast {
+        println version
+    }
+}
+
+group(project.mod_maven_group)
 base {
     archivesName.set("${project.mod_archives_base_name}-all")
 }
