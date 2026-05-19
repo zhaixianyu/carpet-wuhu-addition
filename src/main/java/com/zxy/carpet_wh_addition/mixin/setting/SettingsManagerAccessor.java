@@ -22,7 +22,7 @@ package com.zxy.carpet_wh_addition.mixin.setting;
 
 import carpet.api.settings.CarpetRule;
 import carpet.api.settings.SettingsManager;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.gen.Invoker;
@@ -36,7 +36,7 @@ public interface SettingsManagerAccessor {
 
     //#if MC > 11802
     @Invoker("displayInteractiveSetting")
-    Text displayInteractiveSettings(CarpetRule<?> rule);
+    Component displayInteractiveSettings(CarpetRule<?> rule);
     //#else
     //$$
     //#endif

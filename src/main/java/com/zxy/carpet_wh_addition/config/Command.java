@@ -8,9 +8,9 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.zxy.carpet_wh_addition.featuresList.RuleSearchCommand;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.Component;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -18,11 +18,11 @@ import java.util.function.Supplier;
 import static com.zxy.carpet_wh_addition.config.ServerConfig.configData;
 
 public class Command {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
         RuleSearchCommand.register(dispatcher);
 
-        List<LiteralArgumentBuilder<ServerCommandSource>> commands = List.of(
+        List<LiteralArgumentBuilder<CommandSourceStack>> commands = List.of(
                 //手长修改 已被carpet接管
 //                literal("remote_interaction")
 //                .requires(source -> source.hasPermissionLevel(2)) // 2 表示 OP 权限
@@ -33,18 +33,19 @@ public class Command {
 //                                )
 //                        )
         );
-        for (LiteralArgumentBuilder<ServerCommandSource> command : commands) {
+        for (LiteralArgumentBuilder<CommandSourceStack> command : commands) {
             dispatcher.register(command);
         }
     }
 
-    private static int execute(ServerCommandSource source, String str, double num) {
+    private static int execute(CommandSourceStack source, String str, double num) {
         //#if MC > 11802
-        source.sendMessage(Text.of(str + " changeTo: " + num));
+        source.sendSystemMessage(Component.nullToEmpty(str + " changeTo: " + num));
         //#else
         //$$ try {
-        //$$     source.getPlayer().sendMessage(Text.of(str+ " changeTo: " + num),false);
-        //$$ } catch (com.mojang.brigadier.exceptions.CommandSyntaxException ignored) {
+        //$$     source.getPlayerOrException().displayClientMessage(Component.nullToEmpty(str+ " changeTo: " + num),false);
+        //$$ } catch (Exception e) {
+        //$$     throw new RuntimeException(e);
         //$$ }
         //#endif
         switch (str) {
@@ -56,7 +57,7 @@ public class Command {
         return 1;
     }
 
-    public static void init(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void init(CommandDispatcher<CommandSourceStack> dispatcher) {
 
 //        CommandRegistrationCallback.EVENT.register((dispatcher1, dedicated
 //                                                    //#if MC > 11802

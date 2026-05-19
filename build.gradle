@@ -1,6 +1,7 @@
 plugins {
     id("maven-publish")
-    id("fabric-loom").version("1.15-SNAPSHOT").apply(false)
+    id("fabric-loom").version("1.16-SNAPSHOT").apply(false)
+    id("net.fabricmc.fabric-loom-remap").version("1.15-SNAPSHOT").apply(false)
     id("org.ajoberstar.grgit").version("5.2.0")
     id("com.replaymod.preprocess").version("c5abb4fb12")
 
@@ -44,6 +45,10 @@ preprocess {
     mc12105.link(mc12106, file("versions/mapping-1.21.5-1.21.6.txt"))
     mc12106.link(mc12110, file("versions/mapping-1.21.6-1.21.10.txt"))
     mc12110.link(mc12111, file("versions/mapping-1.21.10-1.21.11.txt"))
+
+    for (final def node in getNodes()) {
+        findProject(node.project).ext.mcVersion = node.mcVersion
+    }
 }
 
 tasks.register("cleanPreprocessSources") {

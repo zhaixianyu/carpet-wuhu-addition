@@ -4,13 +4,13 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.zxy.carpet_wh_addition.OpenInventoryPacket;
 import com.zxy.carpet_wh_addition.config.CarpetWuHuSettings;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,10 +20,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import static com.zxy.carpet_wh_addition.config.CarpetWuHuSettings.handLength;
 import static com.zxy.carpet_wh_addition.config.ServerConfig.configData;
 
-@Mixin(value = ServerPlayNetworkHandler.class)
-public class ServerPlayNetworkHandlerMixin {
+@Mixin(value = ServerGamePacketListenerImpl.class)
+public class ServerGamePacketListenerImplMixin {
     //#if MC > 11802
-    @Shadow public ServerPlayerEntity player;
+    @Shadow public ServerPlayer player;
     //#else
     //$$
     //#endif
@@ -33,8 +33,8 @@ public class ServerPlayNetworkHandlerMixin {
 
     //#else
         //#if MC > 11802
-        //$$ @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/Vec3d;squaredDistanceTo(Lnet/minecraft/util/math/Vec3d;)D"), method = "onPlayerInteractBlock")
-        //$$ public double squaredDistanceTo1(Vec3d instance, Vec3d vec, Operation<Double> original) {
+        //$$ @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;distanceToSqr(Lnet/minecraft/world/phys/Vec3;)D"), method = "handleUseItemOn")
+        //$$ public double squaredDistanceTo1(Vec3 instance, Vec3 vec, Operation<Double> original) {
         //$$     if (handLength < 0 ) return original.call(instance, vec);
         //$$     double d = vec.x - instance.x;
         //$$     double e = vec.y - instance.y;
@@ -45,8 +45,8 @@ public class ServerPlayNetworkHandlerMixin {
         //$$ }
         //#endif
     //$$
-    //$$  @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;squaredDistanceTo(DDD)D"), method = "onPlayerInteractBlock")
-    //$$  public double squaredDistanceTo2(ServerPlayerEntity instance, double x, double y, double z, Operation<Double> original) {
+    //$$  @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;distanceToSqr(DDD)D"), method = "handleUseItemOn")
+    //$$  public double squaredDistanceTo2(ServerPlayer instance, double x, double y, double z, Operation<Double> original) {
     //$$      if (handLength < 0 ) return original.call(instance, x, y, z);
     //$$      double d = x - instance.getX();
     //$$      double e = y - instance.getY();
@@ -61,12 +61,12 @@ public class ServerPlayNetworkHandlerMixin {
 
 
     //#if MC > 11802
-    @WrapOperation(at= @At(value = "INVOKE",target = "Lnet/minecraft/screen/ScreenHandler;canUse(Lnet/minecraft/entity/player/PlayerEntity;)Z"),method = "onClickSlot")
-    private boolean test(ScreenHandler instance, PlayerEntity playerEntity, Operation<Boolean> original){
-        for (ServerPlayerEntity player1 : OpenInventoryPacket.playerlist) {
+    @WrapOperation(at= @At(value = "INVOKE",target = "Lnet/minecraft/world/inventory/AbstractContainerMenu;stillValid(Lnet/minecraft/world/entity/player/Player;)Z"),method = "handleContainerClick")
+    private boolean test(AbstractContainerMenu instance, Player playerEntity, Operation<Boolean> original){
+        for (ServerPlayer player1 : OpenInventoryPacket.playerlist) {
             if (player.equals(player1)) return true;
         }
-        return this.player.currentScreenHandler.canUse(this.player);
+        return this.player.containerMenu.stillValid(this.player);
     }
     //#else
     //$$

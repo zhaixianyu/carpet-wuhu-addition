@@ -1,18 +1,18 @@
 package com.zxy.carpet_wh_addition;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.core.BlockPos;
 
 
 public class TickList {
     public Block block;
-    public ServerWorld world;
+    public ServerLevel world;
     public BlockPos pos;
     public BlockState state;
 
-    public TickList(Block block, ServerWorld world, BlockPos pos, BlockState state) {
+    public TickList(Block block, ServerLevel world, BlockPos pos, BlockState state) {
 
         this.block = block;
         this.world = world;

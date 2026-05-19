@@ -1,2 +1,1 @@
-net.minecraft.entity.Entity getWorld() getEntityWorld()
-net.minecraft.world.World isClient isClient()
+net.minecraft.world.level.Level isClientSide isClientSide()

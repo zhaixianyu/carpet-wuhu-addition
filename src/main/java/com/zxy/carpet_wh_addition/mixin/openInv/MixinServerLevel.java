@@ -2,10 +2,10 @@ package com.zxy.carpet_wh_addition.mixin.openInv;
 
 import com.zxy.carpet_wh_addition.OpenInventoryPacket;
 import com.zxy.carpet_wh_addition.TickList;
-import net.minecraft.block.BlockState;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,18 +16,18 @@ import java.util.ArrayList;
 import static com.zxy.carpet_wh_addition.OpenInventoryPacket.playerlist;
 import static com.zxy.carpet_wh_addition.OpenInventoryPacket.tickMap;
 
-@Mixin(ServerWorld.class)
-public class MixinServerWorld {
+@Mixin(ServerLevel.class)
+public class MixinServerLevel {
     @Inject(at = @At("HEAD"),method = "tick")
     public void tick(CallbackInfo ci){
-        for (ServerPlayerEntity s : playerlist) {
+        for (ServerPlayer s : playerlist) {
             TickList list = tickMap.get(s);
-            if (!list.world.isChunkLoaded(ChunkPos.toLong(list.pos))) {
-                //#if MC > 11802
-                list.world.shouldTickBlockPos(list.pos);
-                //#else
-                //$$ list.world.shouldTick(list.pos);
-                //#endif
+            if (!list.world.areEntitiesLoaded(ChunkPos.asLong(list.pos))) {
+                list.world.shouldTickBlocksAt(list.pos
+                        //#if MC < 11902
+                        //$$ .asLong()
+                        //#endif
+                );
             }
 //            BlockState state =  list.state;
             BlockState state2 = list.world.getBlockState(list.pos);

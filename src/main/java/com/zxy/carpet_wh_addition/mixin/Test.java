@@ -2,16 +2,16 @@ package com.zxy.carpet_wh_addition.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.recipe.ServerRecipeManager;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.village.TradeOffers;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 import java.util.Optional;
 
-@Mixin(ServerRecipeManager.class)
+@Mixin(RecipeManager.class)
 //@Mixin(TradeOffers.SellEnchantedToolFactory.class)
 public class Test {
 

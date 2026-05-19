@@ -11,18 +11,18 @@ import com.mojang.brigadier.context.CommandContext;
 import com.zxy.carpet_wh_addition.config.CarpetWuHuSettings;
 import com.zxy.carpet_wh_addition.config.Translate;
 import com.zxy.carpet_wh_addition.mixin.setting.SettingsManagerAccessor;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Text;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
 //#if MC > 11802
 import carpet.api.settings.RuleHelper;
 import carpet.utils.CommandHelper;
-import net.minecraft.text.TranslatableTextContent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 //#else
 //$$
 //#endif
@@ -30,20 +30,20 @@ import net.minecraft.text.TranslatableTextContent;
 public class RuleSearchCommand {
     //#if MC > 11802
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("cCommandSearch")
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("cCommandSearch")
                 .requires(source -> CommandHelper.canUseCommand(source, CarpetWuHuSettings.commandSearch))
-                .then(CommandManager.argument("搜索等级", IntegerArgumentType.integer(1, 3))
+                .then(Commands.argument("搜索等级", IntegerArgumentType.integer(1, 3))
                         .then(getContent().executes(context -> listRule(context,IntegerArgumentType.getInteger(context,"搜索等级")))))
                 .then(getContent().executes(context -> listRule(context,1)))
         );
     }
-    public static RequiredArgumentBuilder<ServerCommandSource, String> getContent(){
-        return CommandManager.argument("rule", StringArgumentType.greedyString());
+    public static RequiredArgumentBuilder<CommandSourceStack, String> getContent(){
+        return Commands.argument("rule", StringArgumentType.greedyString());
     }
 
     // 列出符合条件的规则
-    private static int listRule(CommandContext<ServerCommandSource> context , int level) {
+    private static int listRule(CommandContext<CommandSourceStack> context , int level) {
         String rule = StringArgumentType.getString(context, "rule");
         if (rule.matches("\".*\"")) {
             rule = rule.substring(1, rule.length() - 1);
@@ -53,10 +53,10 @@ public class RuleSearchCommand {
         }
         List<CarpetRule<?>> list = CarpetServer.settingsManager.getCarpetRules().stream().toList();
         String str = "carpet.commands.commandSearch.backMessage";
-        MutableText text = Text.translatableWithFallback(str, Translate.getTranslate().get(str),rule);
+        MutableComponent text = Component.translatableWithFallback(str, Translate.getTranslate().get(str),rule);
         // 将文本设置为粗体
-        text.styled(style -> style.withBold(true));
-        context.getSource().sendFeedback(
+        text.withStyle(style -> style.withBold(true));
+        context.getSource().sendSuccess(
                 //#if MC > 11904
                 () -> text
                 //#else
@@ -101,7 +101,7 @@ public class RuleSearchCommand {
         return ruleCount;
     }
     //#else
-    //$$ public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    //$$ public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
     //$$
     //$$ }
     //$$

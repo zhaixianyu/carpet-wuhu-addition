@@ -23,6 +23,6 @@
  * SOFTWARE.
  */
 
-package com.zxy.carpet_wh_addition.config;
+package com.zxy.carpet_wh_addition.mixin;
 
 public class DummyClass {}
