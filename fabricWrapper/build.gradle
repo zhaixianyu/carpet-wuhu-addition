@@ -5,8 +5,6 @@ plugins {
     id("java-library")
     id("maven-publish")
 }
-def time = new Date().format("yyyyMMdd", TimeZone.getTimeZone("GMT+08:00"))
-
 version = gradle.modVersion
 
 tasks.register('printVersion') {
@@ -24,16 +22,17 @@ def fabric_subprojects = project.parent.subprojects.findAll({
     it.name != "fabricWrapper"
 })
 
-fabric_subprojects.collect {
-    evaluationDependsOn(":${it.name}")
-}
+//fabric_subprojects.collect {
+//    evaluationDependsOn(":${it.name}")
+//}
 
 jar {
     // disable cache
     outputs.upToDateWhen { false }
 
     dependsOn(fabric_subprojects.collect {
-        it.tasks.remapJar
+        if(it.ext.mcVersion > 12111)it.tasks.jar
+        else it.tasks.remapJar
     })
 
     doFirst {
@@ -42,7 +41,8 @@ jar {
         copy {
             from {
                 fabric_subprojects.collect {
-                    it.remapJar.outputs.files
+                    if(it.ext.mcVersion > 12111)it.jar.outputs.files
+                    else it.remapJar.outputs.files
                 }
             }
 

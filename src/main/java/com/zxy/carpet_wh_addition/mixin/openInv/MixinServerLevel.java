@@ -22,7 +22,13 @@ public class MixinServerLevel {
     public void tick(CallbackInfo ci){
         for (ServerPlayer s : playerlist) {
             TickList list = tickMap.get(s);
-            if (!list.world.areEntitiesLoaded(ChunkPos.asLong(list.pos))) {
+            if (!list.world.areEntitiesLoaded(
+                    //#if MC > 12111
+                    ChunkPos.containing(list.pos).pack()
+                    //#else
+                    //$$ ChunkPos.asLong(list.pos)
+                    //#endif
+            )) {
                 list.world.shouldTickBlocksAt(list.pos
                         //#if MC < 11902
                         //$$ .asLong()

@@ -3,6 +3,8 @@ package com.zxy.carpet_wh_addition.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.zxy.carpet_wh_addition.config.CarpetWuHuSettings;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.AnvilMenu;
@@ -15,6 +17,13 @@ import static com.zxy.carpet_wh_addition.config.CarpetWuHuSettings.anvilEnchantR
 
 @Mixin(AnvilMenu.class)
 public class AnvilMenuMixin {
+    @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;areCompatible(Lnet/minecraft/core/Holder;Lnet/minecraft/core/Holder;)Z"), method = "createResult")
+    private static boolean areCompatible1(Holder<Enchantment> holder, Holder<Enchantment> holder2, Operation<Boolean> original){
+        if (CarpetWuHuSettings.anvilEnchantRemoveRestriction) {
+            return true;
+        }
+        return original.call(holder, holder2);
+    }
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/DataSlot;get()I",ordinal = 1), method = "createResult")
     private int get(DataSlot instance, Operation<Integer> original) {
         int i = instance.get();

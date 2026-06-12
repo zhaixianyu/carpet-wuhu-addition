@@ -139,12 +139,12 @@ public class OpenInventoryPacket {
 
     public static void init(){
         //#if MC > 12004
-        PayloadTypeRegistry.playC2S().register(OpenPackage.OPEN_INVENTORY_ID, OpenPackage.CODEC);
-        PayloadTypeRegistry.playC2S().register(ReturnPackage.OPEN_RETURN_ID, ReturnPackage.CODEC);
-        PayloadTypeRegistry.playC2S().register(HelloPackage.HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
-        PayloadTypeRegistry.playS2C().register(OpenPackage.OPEN_INVENTORY_ID, OpenPackage.CODEC);
-        PayloadTypeRegistry.playS2C().register(ReturnPackage.OPEN_RETURN_ID, ReturnPackage.CODEC);
-        PayloadTypeRegistry.playS2C().register(HelloPackage.HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(OpenPackage.OPEN_INVENTORY_ID, OpenPackage.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(ReturnPackage.OPEN_RETURN_ID, ReturnPackage.CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(HelloPackage.HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(OpenPackage.OPEN_INVENTORY_ID, OpenPackage.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(ReturnPackage.OPEN_RETURN_ID, ReturnPackage.CODEC);
+        PayloadTypeRegistry.serverboundPlay().register(HelloPackage.HELLO_REMOTE_INTERACTIONS_ID, HelloPackage.CODEC);
         //#endif
     }
 
@@ -192,7 +192,11 @@ public class OpenInventoryPacket {
         BlockState blockState = world.getBlockState(pos);
         if (blockState == null) {
             //#if MC > 12104
-            world.getChunkSource().addTicketWithRadius(OPEN_TICKET, new ChunkPos(pos), 2);
+                //#if MC >= 260100
+                world.getChunkSource().addTicketWithRadius(OPEN_TICKET, ChunkPos.containing(pos), 2);
+                //#else
+                //$$ world.getChunkSource().addTicketWithRadius(OPEN_TICKET, new ChunkPos(pos), 2);
+                //#endif
             //#else
             //$$ world.getChunkSource().addRegionTicket(OPEN_TICKET, new ChunkPos(pos), 2, new ChunkPos(pos));
             //#endif

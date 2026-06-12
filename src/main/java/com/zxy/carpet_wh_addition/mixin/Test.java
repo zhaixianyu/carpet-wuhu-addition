@@ -5,7 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.core.Registry;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 

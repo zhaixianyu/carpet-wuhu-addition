@@ -19,7 +19,7 @@ public class CarpetWuHuSettings {
     //手长
     @Rule(categories = WUHU)
     public static double handLength = -1;
-    //铁砧附魔等级解除限制
+    //铁砧附魔解除限制
     @Rule(categories = WUHU)
     public static boolean anvilEnchantRemoveRestriction = false;
     //无限宝库

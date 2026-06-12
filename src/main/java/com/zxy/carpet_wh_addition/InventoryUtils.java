@@ -1,16 +1,8 @@
 package com.zxy.carpet_wh_addition;
 
-import net.minecraft.world.level.block.entity.HopperBlockEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.server.commands.data.BlockDataAccessor;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
-import net.minecraft.server.commands.CloneCommands;
 
 //#if MC > 12006
 import net.minecraft.resources.ResourceKey;
@@ -27,12 +19,6 @@ public class InventoryUtils {
                                           //$$ Enchantment enchantment
                                           //#endif
     ){
-        BlockDataAccessor c;
-        BlockItem c1;
-        CloneCommands c2;
-        ItemStack c3;
-        ClientboundContainerSetSlotPacket c4;
-        FriendlyByteBuf cc;
 
         //#if MC > 12006
         ItemEnchantments enchantments = itemStack.getEnchantments();
@@ -47,8 +33,5 @@ public class InventoryUtils {
         //#else
         //$$ return EnchantmentHelper.getItemEnchantmentLevel(enchantment,itemStack);
         //#endif
-    }
-    private void te(){
-        Minecraft a;
     }
 }
